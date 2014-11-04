@@ -1,0 +1,28 @@
+{
+    "plugins\/datatransfert\/desktop\/php\/datatransfert.php": {
+        "Liste des Data transfert": "Liste des Data transfert",
+        "Général": "Général",
+        "Nom de l'équipement Data transfert": "Nom de l'équipement Data transfert",
+        "Data transfert": "Data transfert",
+        "Ajouter une commande Data transfert": "Ajouter une commande Data transfert",
+        "DevId": "DevId",
+        "Paramètre": "Paramètre",
+        "Paramètres": "Paramètres",
+        "Source": "Source",
+        "Cible": "Cible"
+    },
+    "plugins\/datatransfert\/desktop\/js\/datatransfert.js": {
+        "Tester": "Tester",
+        "Source": "Source",
+        "Cible": "Cible",
+        "Filtre sur fichier": "Filtre sur fichier",
+        "X fichiers les plus recent": "X fichiers les plus recent"
+    },
+    "plugins\/datatransfert\/desktop\/modal\/sftp.configuration.php": {
+        "Port": "Port"
+    },
+    "plugins\/datatransfert\/desktop\/modal\/dropbox.configuration.php": {
+        "Token": "Token",
+        "Nom de  l'application": "Nom de  l'application"
+    }
+}
