@@ -120,7 +120,7 @@ class Filesystem implements FilesystemInterface
             return false;
         }
 
-        $this->cache->updateObject($path, $object, true);
+        $this->cache->updateObject($path, $object + compact('contents'), true);
 
         return true;
     }
@@ -236,7 +236,7 @@ class Filesystem implements FilesystemInterface
             return false;
         }
 
-        $this->cache->updateObject($path, $object, true);
+        $this->cache->updateObject($path, $object + compact('contents'), true);
 
         return true;
     }
@@ -498,8 +498,10 @@ class Filesystem implements FilesystemInterface
     /**
      * List contents with metadata
      *
-     * @param   array  $key  metadata key
-     * @return  array            listing with metadata
+     * @param   array   $key  metadata key
+     * @param   string  $directory
+     * @param   bool    $recursive
+     * @return  array   listing with metadata
      */
     public function listWith(array $keys = array(), $directory = '', $recursive = false)
     {
