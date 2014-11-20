@@ -3,8 +3,14 @@
 === Description
 Plugin permetantant de gérer des transferts de données (ex : video après detection d'une intrusion)
 
+'''
 === Configuration
 include::configuration.asciidoc[]
 
+'''
+=== FAQ
+include::faq.asciidoc[]
+
+'''
 === Changelog
 include::changelog.asciidoc[]
