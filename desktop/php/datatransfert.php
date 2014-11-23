@@ -6,7 +6,7 @@ sendVarToJS('eqType', 'datatransfert');
 ?>
 
 <div class="row row-overflow">
-    <div class="col-lg-2">
+    <div class="col-lg-2 col-md-3 col-sm-4">
         <div class="bs-sidebar">
             <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
                 <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter un équipement}}</a>
@@ -20,28 +20,28 @@ sendVarToJS('eqType', 'datatransfert');
         </div>
     </div>
 
-    <div class="col-lg-10 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
+    <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-sm-6">
                 <form class="form-horizontal">
                     <fieldset>
                         <legend>{{Général}}</legend>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">{{Nom de l'équipement Data transfert}}</label>
-                            <div class="col-lg-4">
+                            <label class="col-sm-3 control-label">{{Nom de l'équipement Data transfert}}</label>
+                            <div class="col-sm-4">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement Data transfert}}"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">{{Activer}}</label>
-                            <div class="col-lg-1">
+                            <label class="col-sm-3 control-label">{{Activer}}</label>
+                            <div class="col-sm-1">
                                 <input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">{{Type}}</label>
-                            <div class="col-lg-4">
+                            <label class="col-sm-3 control-label">{{Type}}</label>
+                            <div class="col-sm-4">
                                 <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
                                     <?php
                                     foreach (datatransfert::supportedProtocol() as $protocol) {
@@ -54,7 +54,7 @@ sendVarToJS('eqType', 'datatransfert');
                     </fieldset> 
                 </form>
             </div>
-            <div class="col-lg-6">
+            <div class="col-sm-6">
                 <form class="form-horizontal">
                     <fieldset>
                         <legend>{{Paramètres}}</legend>

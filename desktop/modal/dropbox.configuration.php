@@ -21,14 +21,14 @@ if (!isConnect('admin')) {
 ?>
 
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Token}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Token}}</label>
+    <div class="col-sm-4">
         <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="token"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Nom de  l'application}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Nom de  l'application}}</label>
+    <div class="col-sm-4">
         <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="appName"/>
     </div>
 </div>

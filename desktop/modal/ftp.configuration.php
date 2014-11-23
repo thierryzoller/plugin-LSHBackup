@@ -21,38 +21,38 @@ if (!isConnect('admin')) {
 ?>
 
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Serveur}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Serveur}}</label>
+    <div class="col-sm-4">
         <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="server"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Port}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Port}}</label>
+    <div class="col-sm-4">
         <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Nom d'utilisateur}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Nom d'utilisateur}}</label>
+    <div class="col-sm-4">
         <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Mot de passe}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Mot de passe}}</label>
+    <div class="col-sm-4">
         <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{SSL}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{SSL}}</label>
+    <div class="col-sm-4">
         <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ssl"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-lg-3 control-label">{{Passif}}</label>
-    <div class="col-lg-4">
+    <label class="col-sm-3 control-label">{{Passif}}</label>
+    <div class="col-sm-4">
         <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="passive"/>
     </div>
 </div>
