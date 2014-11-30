@@ -34,9 +34,26 @@ sendVarToJS('eqType', 'datatransfert');
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-4 control-label" >{{Objet parent}}</label>
+                            <div class="col-sm-6">
+                                <select class="eqLogicAttr form-control" data-l1key="object_id">
+                                    <option value="">{{Aucun}}</option>
+                                    <?php
+                                    foreach (object::all() as $object) {
+                                        echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">{{Activer}}</label>
                             <div class="col-sm-1">
                                 <input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>
+                            </div>
+                            <label class="col-sm-4 control-label">{{Visible}}</label>
+                            <div class="col-sm-1">
+                                <input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>
                             </div>
                         </div>
                         <div class="form-group">
