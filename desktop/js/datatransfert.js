@@ -24,17 +24,17 @@ function  printEqLogic(_eqLogic) {
     $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off();
     if (isset(_eqLogic.configuration) && isset(_eqLogic.configuration.protocol)) {
 
-        $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + _eqLogic.configuration.protocol + '.configuration', function() {
+        $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + _eqLogic.configuration.protocol + '.configuration', function () {
 
             $('body').setValues(_eqLogic, '.eqLogicAttr');
-            $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off().on('change', function() {
+            $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off().on('change', function () {
                 $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration');
             });
             modifyWithoutSave = false;
             $.hideLoading();
         });
     } else {
-        $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').on('change', function() {
+        $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').on('change', function () {
             $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + _eqLogic.configuration.protocol + '.configuration');
         });
         $.hideLoading();
@@ -64,6 +64,7 @@ function addCmdToTable(_cmd) {
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" value="action" style="display : none;">';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" value="other" style="display : none;">';
     if (is_numeric(_cmd.id)) {
+        tr += '<a class="btn btn-default btn-xs cmdAction expertModeVisible" data-action="configure"><i class="fa fa-cogs"></i></a> ';
         tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
     }
     tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
