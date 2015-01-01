@@ -58,7 +58,7 @@ $eqLogics = eqLogic::byType('datatransfert');
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" >{{Objet parent}}</label>
+                            <label class="col-sm-3 control-label" >{{Objet parent}}</label>
                             <div class="col-sm-6">
                                 <select class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
