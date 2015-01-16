@@ -1,0 +1,16 @@
+{
+    "name": "jeedom/plugin-datatransfert",
+    "description": "Data transfert plugin for Jeedom",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Loic Gevrey",
+            "email": "loic@jeedom.com"
+        }
+    ],
+    "require": {
+	"league/flysystem-webdav": "1.0.*@dev",
+        "league/flysystem": "1.0.*@dev",
+	"league/flysystem-dropbox": "1.0.*@dev"
+    }
+}

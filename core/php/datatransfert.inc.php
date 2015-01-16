@@ -18,15 +18,5 @@
 
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 include_file('core', 'datatransfert', 'class', 'datatransfert');
-
-spl_autoload_register(function($class) {
-    if (substr($class, 0, 16) == 'League\Flysystem') {
-        $class = str_replace('League/Flysystem/', '', str_replace('\\', '/', $class));
-        $location = dirname(__FILE__) . '/../../3rdparty/flysystem/' . $class . '.php';
-        if (is_file($location)) {
-            require_once($location);
-            return;
-        }
-    }
-});
+require_once dirname(__FILE__) . '/../../vendor/autoload.php';
 ?>
