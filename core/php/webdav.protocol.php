@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-require_once dirname(__FILE__) . '/../../3rdparty/SabreDAV/vendor/autoload.php';
+require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
 function webdav_send($_eqLogic, $_source, $_cible, $_file) {
     $settings = array(
