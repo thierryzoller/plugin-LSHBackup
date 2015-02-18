@@ -1,0 +1,30 @@
+{
+    "plugins\/datatransfert\/desktop\/php\/datatransfert.php": {
+        "Ajouter un équipement": "Ajouter un équipement",
+        "Rechercher": "Rechercher",
+        "Mes équipements datatransfert": "Mes équipements datatransfert",
+        "Général": "Général",
+        "Nom de l'équipement Data transfert": "Nom de l'équipement Data transfert",
+        "Objet parent": "Objet parent",
+        "Aucun": "Aucun",
+        "Activer": "Activer",
+        "Visible": "Visible",
+        "Type": "Type",
+        "Paramètres": "Paramètres",
+        "Data transfert": "Data transfert",
+        "Ajouter une commande Data transfert": "Ajouter une commande Data transfert",
+        "Nom": "Nom",
+        "Source": "Source",
+        "Cible": "Cible",
+        "Filtre": "Filtre",
+        "Supprimer": "Supprimer",
+        "Sauvegarder": "Sauvegarder"
+    },
+    "plugins\/datatransfert\/desktop\/js\/datatransfert.js": {
+        "Source": "Source",
+        "Cible": "Cible",
+        "Filtre sur fichier": "Filtre sur fichier",
+        "X fichiers les plus recent": "X fichiers les plus recent",
+        "Tester": "Tester"
+    }
+}
