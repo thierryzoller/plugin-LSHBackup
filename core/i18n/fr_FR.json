@@ -26,5 +26,9 @@
         "Filtre sur fichier": "Filtre sur fichier",
         "X fichiers les plus recent": "X fichiers les plus recent",
         "Tester": "Tester"
+    },
+    "plugins\/datatransfert\/plugin_info\/info.xml": {
+        "Plugin pour transferer de fichiers": "Plugin pour transferer de fichiers",
+        "Pour activer le sftp : sudo apt-get install libssh2-php": "Pour activer le sftp : sudo apt-get install libssh2-php"
     }
 }
