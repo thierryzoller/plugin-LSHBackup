@@ -23,9 +23,7 @@ function  printEqLogic(_eqLogic) {
     $.showLoading();
     $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off();
     if (isset(_eqLogic.configuration) && isset(_eqLogic.configuration.protocol)) {
-
         $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + _eqLogic.configuration.protocol + '.configuration', function () {
-
             $('body').setValues(_eqLogic, '.eqLogicAttr');
             $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off().on('change', function () {
                 $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration');
@@ -35,7 +33,7 @@ function  printEqLogic(_eqLogic) {
         });
     } else {
         $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').on('change', function () {
-            $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + _eqLogic.configuration.protocol + '.configuration');
+            $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration');
         });
         $.hideLoading();
     }
