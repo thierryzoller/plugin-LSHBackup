@@ -102,18 +102,201 @@
         ]
     },
     {
-        "name": "sabre/vobject",
-        "version": "3.3.5",
-        "version_normalized": "3.3.5.0",
+        "name": "league/flysystem",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/fruux/sabre-vobject.git",
-            "reference": "77cb636a5bde4c19d7522c2c548b258859ddd1ef"
+            "url": "https://github.com/thephpleague/flysystem.git",
+            "reference": "9af061676707141ae4215a84020d38c7b836f471"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fruux/sabre-vobject/zipball/77cb636a5bde4c19d7522c2c548b258859ddd1ef",
-            "reference": "77cb636a5bde4c19d7522c2c548b258859ddd1ef",
+            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9af061676707141ae4215a84020d38c7b836f471",
+            "reference": "9af061676707141ae4215a84020d38c7b836f471",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "ext-fileinfo": "*",
+            "league/phpunit-coverage-listener": "~1.1",
+            "mockery/mockery": "~0.9",
+            "phpspec/phpspec": "~2.0",
+            "phpspec/prophecy-phpunit": "~1.0",
+            "phpunit/phpunit": "~4.1",
+            "predis/predis": "~1.0",
+            "tedivm/stash": "~0.12.0"
+        },
+        "suggest": {
+            "ext-fileinfo": "Required for MimeType",
+            "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+            "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+            "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+            "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+            "league/flysystem-copy": "Allows you to use Copy.com storage",
+            "league/flysystem-dropbox": "Allows you to use Dropbox storage",
+            "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+            "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+            "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+            "league/flysystem-webdav": "Allows you to use WebDAV storage",
+            "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
+            "predis/predis": "Allows you to use Predis for caching"
+        },
+        "time": "2015-03-29 14:18:42",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "League\\Flysystem\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Frank de Jonge",
+                "email": "info@frenky.net"
+            }
+        ],
+        "description": "Many filesystems, one API.",
+        "keywords": [
+            "Cloud Files",
+            "WebDAV",
+            "aws",
+            "cloud",
+            "copy.com",
+            "dropbox",
+            "file systems",
+            "files",
+            "filesystem",
+            "ftp",
+            "rackspace",
+            "remote",
+            "s3",
+            "sftp",
+            "storage"
+        ]
+    },
+    {
+        "name": "league/flysystem-webdav",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/flysystem-webdav.git",
+            "reference": "1b82edf84844aa17b60839d1d5bf8ff39099fe2f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/1b82edf84844aa17b60839d1d5bf8ff39099fe2f",
+            "reference": "1b82edf84844aa17b60839d1d5bf8ff39099fe2f",
+            "shasum": ""
+        },
+        "require": {
+            "league/flysystem": "~1.0",
+            "php": ">=5.4.0",
+            "sabre/dav": "~2.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2015-01-21 22:20:23",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "League\\Flysystem\\WebDAV\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Frank de Jonge",
+                "email": "info@frenky.net"
+            }
+        ],
+        "description": "Flysystem adapter for WebDAV"
+    },
+    {
+        "name": "league/flysystem-dropbox",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/flysystem-dropbox.git",
+            "reference": "2f464a6a80c0dcc2113a8cc636ca9d4a0fc26617"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/flysystem-dropbox/zipball/2f464a6a80c0dcc2113a8cc636ca9d4a0fc26617",
+            "reference": "2f464a6a80c0dcc2113a8cc636ca9d4a0fc26617",
+            "shasum": ""
+        },
+        "require": {
+            "dropbox/dropbox-sdk": "~1.1",
+            "league/flysystem": "~1.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.9.*",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2015-01-21 22:19:57",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "League\\Flysystem\\Dropbox\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Frank de Jonge",
+                "email": "info@frenky.net"
+            }
+        ],
+        "description": "Flysystem adapter for Dropbox"
+    },
+    {
+        "name": "sabre/vobject",
+        "version": "3.4.2",
+        "version_normalized": "3.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fruux/sabre-vobject.git",
+            "reference": "0c90f60dae40137f1903c7b5915d3691c4fc99b0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fruux/sabre-vobject/zipball/0c90f60dae40137f1903c7b5915d3691c4fc99b0",
+            "reference": "0c90f60dae40137f1903c7b5915d3691c4fc99b0",
             "shasum": ""
         },
         "require": {
@@ -124,7 +307,7 @@
             "phpunit/phpunit": "*",
             "squizlabs/php_codesniffer": "*"
         },
-        "time": "2015-01-10 00:54:52",
+        "time": "2015-02-25 17:47:50",
         "bin": [
             "bin/vobject",
             "bin/generate_vcards"
@@ -171,17 +354,17 @@
     },
     {
         "name": "sabre/dav",
-        "version": "2.1.2",
-        "version_normalized": "2.1.2.0",
+        "version": "2.1.3",
+        "version_normalized": "2.1.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/fruux/sabre-dav.git",
-            "reference": "33b602b182445b41c480a5115884e62c2acccc7a"
+            "reference": "6a8aec204688d36681e0185fbaf1974b97e4a070"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/33b602b182445b41c480a5115884e62c2acccc7a",
-            "reference": "33b602b182445b41c480a5115884e62c2acccc7a",
+            "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/6a8aec204688d36681e0185fbaf1974b97e4a070",
+            "reference": "6a8aec204688d36681e0185fbaf1974b97e4a070",
             "shasum": ""
         },
         "require": {
@@ -197,7 +380,7 @@
             "php": ">=5.4.1",
             "sabre/event": "~2.0.0",
             "sabre/http": "~3.0.0",
-            "sabre/vobject": "~3.3.4"
+            "sabre/vobject": "~3.3"
         },
         "require-dev": {
             "evert/phpdoc-md": "~0.1.0",
@@ -208,7 +391,7 @@
             "ext-curl": "*",
             "ext-pdo": "*"
         },
-        "time": "2014-12-10 21:51:51",
+        "time": "2015-02-25 18:13:20",
         "bin": [
             "bin/sabredav",
             "bin/naturalselection"
@@ -246,156 +429,18 @@
         ]
     },
     {
-        "name": "league/flysystem",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/flysystem.git",
-            "reference": "59f43cc2624145ea2f091ce10ddaf389a4296d86"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/59f43cc2624145ea2f091ce10ddaf389a4296d86",
-            "reference": "59f43cc2624145ea2f091ce10ddaf389a4296d86",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "aws/aws-sdk-php": "~2.4",
-            "barracuda/copy": "~1.1.4",
-            "dropbox/dropbox-sdk": "~1.1.1",
-            "ext-fileinfo": "*",
-            "league/event": "~1.0",
-            "league/phpunit-coverage-listener": "~1.1",
-            "mockery/mockery": "~0.9",
-            "phpseclib/phpseclib": "~0.3.5",
-            "phpspec/phpspec": "~2.0.0",
-            "phpunit/phpunit": "~4.0",
-            "predis/predis": "~1.0",
-            "rackspace/php-opencloud": "~1.11",
-            "tedivm/stash": "~0.12.0"
-        },
-        "suggest": {
-            "ext-fileinfo": "Required for MimeType",
-            "league/event": "Required for EventableFilesystem",
-            "league/flysystem-aws-s3-v2": "Use S3 storage with AWS SDK v2",
-            "league/flysystem-aws-s3-v3": "Use S3 storage with AWS SDK v3",
-            "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
-            "league/flysystem-copy": "Allows you to use Copy.com storage",
-            "league/flysystem-dropbox": "Use Dropbox storage",
-            "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
-            "league/flysystem-webdav": "Allows you to use WebDAV storage",
-            "phpseclib/phpseclib": "Allows SFTP server storage",
-            "predis/predis": "Allows you to use Predis for caching",
-            "tedivm/stash": "Allows you to use Stash as cache implementation"
-        },
-        "time": "2015-01-11 15:40:33",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "League\\Flysystem\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Frank de Jonge",
-                "email": "info@frenky.net"
-            }
-        ],
-        "description": "Many filesystems, one API.",
-        "keywords": [
-            "Cloud Files",
-            "WebDAV",
-            "aws",
-            "cloud",
-            "copy.com",
-            "dropbox",
-            "file systems",
-            "files",
-            "filesystem",
-            "ftp",
-            "rackspace",
-            "remote",
-            "s3",
-            "sftp",
-            "storage"
-        ]
-    },
-    {
-        "name": "league/flysystem-webdav",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/flysystem-webdav.git",
-            "reference": "e18f4f300e148712e0da9b3a95be62b303104bc6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/e18f4f300e148712e0da9b3a95be62b303104bc6",
-            "reference": "e18f4f300e148712e0da9b3a95be62b303104bc6",
-            "shasum": ""
-        },
-        "require": {
-            "league/flysystem": "~1.0@dev",
-            "php": ">=5.4.0",
-            "sabre/dav": "~2.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9",
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2014-12-11 14:23:57",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "League\\Flysystem\\WebDAV\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Frank de Jonge",
-                "email": "info@frenky.net"
-            }
-        ],
-        "description": "Flysystem adapter for WebDAV"
-    },
-    {
         "name": "dropbox/dropbox-sdk",
-        "version": "v1.1.4",
-        "version_normalized": "1.1.4.0",
+        "version": "v1.1.5",
+        "version_normalized": "1.1.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/dropbox/dropbox-sdk-php.git",
-            "reference": "73e5add2f6d5d0355fa04e758f895e10c08d240a"
+            "reference": "138bfec02f042fa6a4b384c0ae7ebe92ad122bbd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/dropbox/dropbox-sdk-php/zipball/73e5add2f6d5d0355fa04e758f895e10c08d240a",
-            "reference": "73e5add2f6d5d0355fa04e758f895e10c08d240a",
+            "url": "https://api.github.com/repos/dropbox/dropbox-sdk-php/zipball/138bfec02f042fa6a4b384c0ae7ebe92ad122bbd",
+            "reference": "138bfec02f042fa6a4b384c0ae7ebe92ad122bbd",
             "shasum": ""
         },
         "require": {
@@ -407,7 +452,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "2.0.0RC3"
         },
-        "time": "2014-10-21 21:09:01",
+        "time": "2015-02-23 20:51:29",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -423,54 +468,5 @@
         "keywords": [
             "dropbox"
         ]
-    },
-    {
-        "name": "league/flysystem-dropbox",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/flysystem-dropbox.git",
-            "reference": "75d5184e2c5f1d5658cd734689e1564748a00754"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem-dropbox/zipball/75d5184e2c5f1d5658cd734689e1564748a00754",
-            "reference": "75d5184e2c5f1d5658cd734689e1564748a00754",
-            "shasum": ""
-        },
-        "require": {
-            "dropbox/dropbox-sdk": "~1.1",
-            "league/flysystem": "~1.0@dev",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.9.*",
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-01-11 13:38:09",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "League\\Flysystem\\Dropbox\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Frank de Jonge",
-                "email": "info@frenky.net"
-            }
-        ],
-        "description": "Flysystem adapter for Dropbox"
     }
 ]

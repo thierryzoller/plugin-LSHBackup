@@ -1,6 +1,33 @@
 # Changelog
 
-## 0.6.0 - UNRELEASED
+## 1.0.4 - UNRELEASED
+
+## 1.0.3 - 2015-03-29
+
+### Fixed
+
+* #429: Handle FTP filenames with leading spaces.
+* #418: Handle FTP filenames with dot prefixes.
+* #427: Path normalising edge case resolved.
+
+## 1.0.2 2015-03-10
+
+### Altered
+
+* [Adapter\Local] Again allows read only dirs to be the adapter's root.
+
+## 1.0.1 - 2015-01-23
+
+### Fixed
+
+* Re-added missing metadata from pathinfo to `getMetadata` calls.
+
+## 1.0.0 - 2015-01-19
+
+### Removed
+
+* Adapters moved into their own repo's: AwsS3, Dropbox, GridFS, Rackspace
+* [Filesystem] Caching is removed and moved into it's own repo as an adapter decorator.
 
 ### Fixed
 

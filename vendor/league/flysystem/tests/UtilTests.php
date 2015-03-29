@@ -6,9 +6,13 @@ class UtilTests extends \PHPUnit_Framework_TestCase
 {
     public function testEmulateDirectories()
     {
-        $input = [['dirname' => '', 'filename' => 'dummy'], ['dirname' => 'something', 'filename' => 'dummy']];
+        $input = [
+            ['dirname' => '', 'filename' => 'dummy'],
+            ['dirname' => 'something', 'filename' => 'dummy'],
+            ['dirname' => 'something', 'path' => 'something/dirname', 'type' => 'dir'],
+        ];
         $output = Util::emulateDirectories($input);
-        $this->assertCount(3, $output);
+        $this->assertCount(4, $output);
     }
 
     public function testContentSize()
@@ -20,7 +24,7 @@ class UtilTests extends \PHPUnit_Framework_TestCase
     public function mapProvider()
     {
         return [
-            [['from.this' => 'value'], ['from.this' => 'to.this'], ['to.this' => 'value']],
+            [['from.this' => 'value'], ['from.this' => 'to.this', 'other' => 'other'], ['to.this' => 'value']],
             [['from.this' => 'value', 'no.mapping' => 'lost'], ['from.this' => 'to.this'], ['to.this' => 'value']],
         ];
     }
@@ -55,7 +59,6 @@ class UtilTests extends \PHPUnit_Framework_TestCase
     public function testEnsureConfig()
     {
         $this->assertInstanceOf('League\Flysystem\Config', Util::ensureConfig([]));
-        $this->assertInstanceOf('League\Flysystem\Config', Util::ensureConfig('string'));
         $this->assertInstanceOf('League\Flysystem\Config', Util::ensureConfig(null));
         $this->assertInstanceOf('League\Flysystem\Config', Util::ensureConfig(new Config()));
     }
@@ -83,7 +86,7 @@ class UtilTests extends \PHPUnit_Framework_TestCase
      */
     public function testOutsideRootPath($path)
     {
-        Util::normalizePath('something/../../../hehe');
+        Util::normalizePath($path);
     }
 
     public function pathProvider()
@@ -126,5 +129,30 @@ class UtilTests extends \PHPUnit_Framework_TestCase
     {
         $mimeType = Util::guessMimeType($path, $content);
         $this->assertEquals($expected, $mimeType);
+    }
+
+    public function testStreamSize()
+    {
+        $stream = tmpfile();
+        fwrite($stream, 'aaa');
+        $size = Util::getStreamSize($stream);
+        $this->assertEquals(3, $size);
+        fclose($stream);
+    }
+
+    public function testRewindStream()
+    {
+        $stream = tmpfile();
+        fwrite($stream, 'something');
+        $this->assertNotEquals(0, ftell($stream));
+        Util::rewindStream($stream);
+        $this->assertEquals(0, ftell($stream));
+        fclose($stream);
+    }
+
+    public function testNormalizePrefix()
+    {
+        $this->assertEquals('test/', Util::normalizePrefix('test', '/'));
+        $this->assertEquals('test/', Util::normalizePrefix('test/', '/'));
     }
 }
