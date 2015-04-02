@@ -16,7 +16,7 @@
  */
 
 if (!isConnect('admin')) {
-    throw new Exception('{{401 - Accès non autorisé}}');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
 
@@ -35,7 +35,7 @@ if (!isConnect('admin')) {
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Mot de passe}}</label>
     <div class="col-sm-4">
-        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password"/>
+        <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password"/>
     </div>
 </div>
 <div class="form-group">
