@@ -21,11 +21,11 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
 use Dropbox\Client;
+use League\Flysystem\Dropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Dropbox as Adapter;
 
 function dropbox_send($_eqLogic, $_source, $_cible, $_file) {
-    $client = new Client($_eqLogic->getConfiguration('token'), $_eqLogic->getConfiguration('appName'));
-    $flysystem = new Filesystem(new Adapter($client, $_cible));
-    $flysystem->put($_file, file_get_contents($_source . '/' . $_file));
+	$client = new Client($_eqLogic->getConfiguration('token'), $_eqLogic->getConfiguration('appName'));
+	$flysystem = new Filesystem(new DropboxAdapter($client, $_cible));
+	$flysystem->put($_file, file_get_contents($_source . '/' . $_file));
 }
