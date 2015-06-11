@@ -5,7 +5,7 @@
     <description>Plugin pour transferer de fichiers</description>
     <icon>fa fa-exchange</icon>
     <licence>AGPL</licence>
-    <author>Loïc Gevrey</author>
+    <author>Loic Gevrey</author>
     <installation>Pour activer le sftp : sudo apt-get install libssh2-php</installation>
     <require>1.60</require>
     <version>1.0</version>
