@@ -16,7 +16,7 @@
  */
 
 if (!isConnect('admin')) {
-    throw new Exception('{{401 - Accès non autorisé}}');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
 
@@ -29,7 +29,7 @@ if (!isConnect('admin')) {
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Port}}</label>
     <div class="col-sm-4">
-        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port"/>
+        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port" value="22" />
     </div>
 </div>
 <div class="form-group">
