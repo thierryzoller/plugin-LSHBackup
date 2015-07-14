@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-function prePrintEqLogic() {
+ function prePrintEqLogic() {
     $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off();
 }
 
@@ -25,15 +25,20 @@ function  printEqLogic(_eqLogic) {
     if (isset(_eqLogic.configuration) && isset(_eqLogic.configuration.protocol)) {
         $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + _eqLogic.configuration.protocol + '.configuration', function () {
             $('body').setValues(_eqLogic, '.eqLogicAttr');
+            initCheckBox();
             $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').off().on('change', function () {
-                $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration');
+                $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration',function(){
+                    initCheckBox();
+                });
             });
             modifyWithoutSave = false;
             $.hideLoading();
         });
     } else {
         $('.eqLogicAttr[data-l1key=configuration][data-l2key=protocol]').on('change', function () {
-            $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration');
+            $('#div_protocolParameters').load('index.php?v=d&plugin=datatransfert&modal=' + $(this).val() + '.configuration',function(){
+                initCheckBox();
+            });
         });
         $.hideLoading();
     }

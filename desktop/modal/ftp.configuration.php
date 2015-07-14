@@ -47,13 +47,13 @@ if (!isConnect('admin')) {
 <div class="form-group">
     <label class="col-sm-3 control-label">{{SSL}}</label>
     <div class="col-sm-4">
-        <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="ssl"/>
+        <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-l1key="configuration" data-l2key="ssl"/>
     </div>
 </div>
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Passif}}</label>
     <div class="col-sm-4">
-        <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="passive"/>
+        <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-l1key="configuration" data-l2key="passive"/>
     </div>
 </div>
 
