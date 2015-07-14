@@ -21,3 +21,5 @@ Pour les exemples ci-dessous, nous désirons transférer la totalité ou une par
 include::configuration_dropbox.asciidoc[]
 
 include::configuration_ftp.asciidoc[]
+
+include::configuration_local.asciidoc[]
