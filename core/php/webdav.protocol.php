@@ -21,16 +21,16 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
 function webdav_send($_eqLogic, $_source, $_cible, $_file) {
-    $settings = array(
-        'baseUri' => $_eqLogic->getConfiguration('baseUri'),
-        'userName' => $_eqLogic->getConfiguration('userName'),
-        'password' => $_eqLogic->getConfiguration('password'),
-    );
-    $client = new Sabre\DAV\Client($settings);
-    if($_eqLogic->getConfiguration('disableSslVerification',0) == 1){
-    	$client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
-    }
-    $adapter = new League\Flysystem\Adapter\WebDav($client, $_cible);
-    $flysystem = new League\Flysystem\Filesystem($adapter);
-    $flysystem->put($_file, file_get_contents($_source . '/' . $_file));
+	$settings = array(
+		'baseUri' => $_eqLogic->getConfiguration('baseUri'),
+		'userName' => $_eqLogic->getConfiguration('userName'),
+		'password' => $_eqLogic->getConfiguration('password'),
+	);
+	$client = new Sabre\DAV\Client($settings);
+	if ($_eqLogic->getConfiguration('disableSslVerification', 0) == 1) {
+		$client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
+	}
+	$adapter = new League\Flysystem\WebDAV\WebDAVAdapter($client, $_cible);
+	$flysystem = new League\Flysystem\Filesystem($adapter);
+	$flysystem->put($_file, file_get_contents($_source . '/' . $_file));
 }

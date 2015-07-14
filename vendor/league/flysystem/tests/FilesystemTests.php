@@ -1,6 +1,5 @@
 <?php
 
-use League\Flysystem\Config;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Util;
 use Prophecy\Argument;
@@ -133,6 +132,12 @@ class FilesystemTests extends ProphecyTestCase
         fclose($stream);
     }
 
+    public function testPutStreamInvalid()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->filesystem->putStream('path.txt', '__INVALID__');
+    }
+
     public function testWriteStreamInvalid()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -198,8 +203,7 @@ class FilesystemTests extends ProphecyTestCase
     {
         $old = 'old.txt';
         $new = 'new.txt';
-        $this->prophecy->has($old)->willReturn(true);
-        $this->prophecy->has($new)->willReturn(false);
+        $this->prophecy->has(Argument::any())->willReturn(true, false);
         $this->prophecy->rename($old, $new)->willReturn(true);
         $response = $this->filesystem->rename($old, $new);
         $this->assertTrue($response);
@@ -209,8 +213,7 @@ class FilesystemTests extends ProphecyTestCase
     {
         $old = 'old.txt';
         $new = 'new.txt';
-        $this->prophecy->has($old)->willReturn(true);
-        $this->prophecy->has($new)->willReturn(false);
+        $this->prophecy->has(Argument::any())->willReturn(true, false);
         $this->prophecy->copy($old, $new)->willReturn(true);
         $response = $this->filesystem->copy($old, $new);
         $this->assertTrue($response);
@@ -347,15 +350,34 @@ class FilesystemTests extends ProphecyTestCase
            ['path' => 'other_root/file.txt'],
            ['path' => 'valid/to_deep/file.txt'],
            ['path' => 'valid/file.txt'],
+           ['path' => 'valid/a-valid-file.txt'],
         ];
 
         $expected = [
+            Util::pathinfo('valid/a-valid-file.txt'),
             Util::pathinfo('valid/file.txt'),
         ];
 
         $this->prophecy->listContents('valid', false)->willReturn($rawListing);
         $output = $this->filesystem->listContents('valid', false);
         $this->assertEquals($expected, $output);
+    }
+
+    public function testListContentZeroName()
+    {
+        $rawListing = [
+            // files
+            ['path' => 0],
+            ['path' => '0'],
+            ['path' => ''],
+            // directories
+            ['path' => 0, 'type' => 'dir'],
+            ['path' => '0', 'type' => 'dir'],
+            ['path' => '', 'type' => 'dir']
+        ];
+        $this->prophecy->listContents('', false)->willReturn($rawListing);
+        $output = $this->filesystem->listContents('', false);
+        $this->assertCount(4, $output);
     }
 
     public function testInvalidPluginCall()

@@ -11,6 +11,7 @@ use League\Flysystem\Util;
 use LogicException;
 use Sabre\DAV\Client;
 use Sabre\DAV\Exception;
+use Sabre\DAV\Exception\NotFound;
 
 class WebDAVAdapter extends AbstractAdapter
 {
@@ -61,7 +62,7 @@ class WebDAVAdapter extends AbstractAdapter
             ]);
 
             return $this->normalizeObject($result, $path);
-        } catch (Exception\FileNotFound $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -90,10 +91,12 @@ class WebDAVAdapter extends AbstractAdapter
 
             return array_merge([
                 'contents' => $response['body'],
-                'timestamp' => strtotime($response['headers']['last-modified']),
+                'timestamp' => strtotime(is_array($response['headers']['last-modified'])
+                    ? current($response['headers']['last-modified'])
+                    : $response['headers']['last-modified']),
                 'path' => $path,
             ], Util::map($response['headers'], static::$resultMap));
-        } catch (Exception\FileNotFound $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -105,7 +108,6 @@ class WebDAVAdapter extends AbstractAdapter
     {
         $location = $this->applyPathPrefix($path);
         $this->client->request('PUT', $location, $contents);
-
         $result = compact('path', 'contents');
 
         if ($config->get('visibility')) {
@@ -129,16 +131,17 @@ class WebDAVAdapter extends AbstractAdapter
     public function rename($path, $newpath)
     {
         $location = $this->applyPathPrefix($path);
+        $newLocation = $this->applyPathPrefix($newpath);
 
         try {
             $response = $this->client->request('MOVE', '/'.ltrim($location, '/'), null, [
-                'Destination' => '/'.ltrim($newpath, '/'),
+                'Destination' => '/'.ltrim($newLocation, '/'),
             ]);
 
             if ($response['statusCode'] >= 200 && $response['statusCode'] < 300) {
                 return true;
             }
-        } catch (Exception\FileNotFound $e) {
+        } catch (NotFound $e) {
             // Would have returned false here, but would be redundant
         }
 
@@ -156,7 +159,7 @@ class WebDAVAdapter extends AbstractAdapter
             $this->client->request('DELETE', $location);
 
             return true;
-        } catch (Exception\FileNotFound $e) {
+        } catch (NotFound $e) {
             return false;
         }
     }
@@ -190,7 +193,6 @@ class WebDAVAdapter extends AbstractAdapter
     public function listContents($directory = '', $recursive = false)
     {
         $location = $this->applyPathPrefix($directory);
-
         $response = $this->client->propFind($location, [
             '{DAV:}displayname',
             '{DAV:}getcontentlength',
@@ -199,7 +201,6 @@ class WebDAVAdapter extends AbstractAdapter
         ], 1);
 
         array_shift($response);
-
         $result = [];
 
         foreach ($response as $path => $object) {

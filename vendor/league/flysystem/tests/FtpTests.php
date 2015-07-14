@@ -66,9 +66,21 @@ function ftp_login($connection)
     return true;
 }
 
-function ftp_chdir($connection)
+function ftp_chdir($connection, $directory)
 {
     if ($connection === 'chdir.fail') {
+        return false;
+    }
+
+    if ($directory === 'not.found') {
+        return false;
+    }
+
+    if (in_array($directory, ['file1.txt', 'file2.txt', 'dir1'])) {
+        return false;
+    }
+
+    if ($directory === '0') {
         return false;
     }
 
@@ -106,8 +118,33 @@ function ftp_rawlist($connection, $directory)
     if (strpos($directory, 'fail.rawlist') !== false) {
         return false;
     }
+
     if ($directory === 'not.found') {
         return false;
+    }
+
+    if (strpos($directory, 'file1.txt') !== false) {
+        return [
+            '-rw-r--r--   1 ftp      ftp           409 Aug 19 09:01 file1.txt',
+        ];
+    }
+
+    if ($directory === '0') {
+        return [
+            '-rw-r--r--   1 ftp      ftp           409 Aug 19 09:01 0',
+        ];
+    }
+
+    if (strpos($directory, 'file2.txt') !== false) {
+        return [
+            '05-23-15  12:09PM                  684 file2.txt',
+        ];
+    }
+
+    if (strpos($directory, 'dir1') !== false) {
+        return [
+            '2015-05-23  12:09       <DIR>          dir1',
+        ];
     }
 
     if (strpos($directory, 'rmdir.nested.fail') !== false) {
@@ -272,6 +309,61 @@ class FtpTests extends \PHPUnit_Framework_TestCase
     /**
      * @depends testInstantiable
      */
+    public function testGetMetadataForRoot()
+    {
+        $adapter = new Ftp($this->options);
+        $metadata = $adapter->getMetadata('');
+        $expected = ['type' => 'dir', 'path' => ''];
+        $this->assertEquals($expected, $metadata);
+    }
+
+    /**
+     * @depends testInstantiable
+     */
+    public function testGetMetadata()
+    {
+        $adapter = new Ftp($this->options);
+        $metadata = $adapter->getMetadata('file1.txt');
+        $this->assertInternalType('array', $metadata);
+        $this->assertEquals('file', $metadata['type']);
+        $this->assertEquals('file1.txt', $metadata['path']);
+    }
+
+    /**
+     * @depends testInstantiable
+     */
+    public function testGetMetadataForRootFileNamedZero()
+    {
+        $adapter = new Ftp($this->options);
+        $metadata = $adapter->getMetadata('0');
+        $this->assertInternalType('array', $metadata);
+        $this->assertEquals('file', $metadata['type']);
+        $this->assertEquals('0', $metadata['path']);
+    }
+
+    /**
+     * @depends testInstantiable
+     */
+    public function testGetWindowsMetadata()
+    {
+        $adapter = new Ftp($this->options);
+        $metadata = $adapter->getMetadata('file2.txt');
+        $this->assertInternalType('array', $metadata);
+        $this->assertEquals('file', $metadata['type']);
+        $this->assertEquals('file2.txt', $metadata['path']);
+        $this->assertEquals(1432382940, $metadata['timestamp']);
+        $this->assertEquals('public', $metadata['visibility']);
+        $this->assertEquals(684, $metadata['size']);
+
+        $metadata = $adapter->getMetadata('dir1');
+        $this->assertEquals('dir', $metadata['type']);
+        $this->assertEquals('dir1', $metadata['path']);
+        $this->assertEquals(1432382940, $metadata['timestamp']);
+    }
+
+    /**
+     * @depends testInstantiable
+     */
     public function testGetLastFile()
     {
         $adapter = new Ftp($this->options);
@@ -300,8 +392,6 @@ class FtpTests extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('spaced.files/ file1.txt', $file['path']);
     }
-
-
 
     /**
      * @depends testInstantiable
@@ -374,6 +464,27 @@ class FtpTests extends \PHPUnit_Framework_TestCase
     {
         $adapter = new Ftp(['host' => 'pasv.fail', 'ssl' => true, 'root' => 'somewhere']);
         $adapter->connect();
+    }
+
+    /**
+     * @depends testInstantiable
+     */
+    public function testItCanSetSystemType()
+    {
+        $adapter = new Ftp($this->options);
+        $this->assertNull($adapter->getSystemType());
+        $adapter->setSystemType('unix');
+        $this->assertEquals('unix', $adapter->getSystemType());
+    }
+
+    /**
+     * @depends testInstantiable
+     * @expectedException \League\Flysystem\NotSupportedException
+     */
+    public function testItThrowsAnExceptionWhenAnInvalidSystemTypeIsSet()
+    {
+        $adapter = new Ftp($this->options + ['systemType' => 'unknown']);
+        $adapter->listContents();
     }
 
     /**

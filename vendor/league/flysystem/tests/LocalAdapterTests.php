@@ -4,31 +4,23 @@ namespace League\Flysystem\Adapter;
 
 use League\Flysystem\Config;
 
-function fopen($result)
+function fopen($result, $mode)
 {
     if (substr($result, -5) === 'false') {
         return false;
     }
 
-    if (substr($result, -5) === 'dummy') {
-        return 'dummy';
+    if (substr($result, -10) === 'fail.close') {
+        return \fopen('data://text/plain,fail.close', $mode);
     }
 
     return call_user_func_array('fopen', func_get_args());
 }
 
-function fwrite($result)
-{
-    if (is_string($result)) {
-        return 'dummy';
-    }
-
-    return call_user_func_array('fwrite', func_get_args());
-}
-
 function fclose($result)
 {
-    if (is_string($result) and substr($result, -5) === 'dummy') {
+    if (is_resource($result) && stream_get_contents($result) === 'fail.close') {
+        \fclose($result);
         return false;
     }
 
@@ -71,7 +63,7 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
             if ($file->isDir()) {
                 rmdir($file->getRealPath());
             } else {
-                unlink($file->getRealPath());
+                unlink($file->getPathname());
             }
         }
     }
@@ -155,7 +147,7 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
     public function testFailingStreamCalls()
     {
         $this->assertFalse($this->adapter->writeStream('false', tmpfile(), new Config()));
-        $this->assertFalse($this->adapter->writeStream('dummy', tmpfile(), new Config()));
+        $this->assertFalse($this->adapter->writeStream('fail.close', tmpfile(), new Config()));
     }
 
     public function testNullPrefix()
@@ -204,6 +196,14 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('type', $contents[0]);
     }
 
+    public function testListContentsRecursive()
+    {
+        $this->adapter->write('dirname/file.txt', 'contents', new Config());
+        $this->adapter->write('dirname/other.txt', 'contents', new Config());
+        $contents = $this->adapter->listContents('', true);
+        $this->assertCount(3, $contents);
+    }
+
     public function testGetSize()
     {
         $this->adapter->write('dummy.txt', '1234', new Config());
@@ -236,6 +236,15 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->adapter->createDir('fail.plz', new Config()));
     }
 
+    public function testCreateDirDefaultVisibility()
+    {
+        $this->adapter->createDir('test-dir', new Config());
+        $output = $this->adapter->getVisibility('test-dir');
+        $this->assertInternalType('array', $output);
+        $this->assertArrayHasKey('visibility', $output);
+        $this->assertEquals('public', $output['visibility']);
+    }
+
     public function testDeleteDir()
     {
         $this->adapter->write('nested/dir/path.txt', 'contents', new Config());
@@ -245,7 +254,7 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
         $this->assertFalse(is_dir(__DIR__.'/files/nested/dir'));
     }
 
-    public function testVisibilityPublic()
+    public function testVisibilityPublicFile()
     {
         if (IS_WINDOWS) {
             $this->markTestSkipped("Visibility not supported on Windows.");
@@ -259,7 +268,21 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
         $this->assertEquals('public', $output['visibility']);
     }
 
-    public function testVisibilityPrivate()
+    public function testVisibilityPublicDir()
+    {
+        if (IS_WINDOWS) {
+            $this->markTestSkipped("Visibility not supported on Windows.");
+        }
+
+        $this->adapter->createDir('public-dir', new Config());
+        $this->adapter->setVisibility('public-dir', 'public');
+        $output = $this->adapter->getVisibility('public-dir');
+        $this->assertInternalType('array', $output);
+        $this->assertArrayHasKey('visibility', $output);
+        $this->assertEquals('public', $output['visibility']);
+    }
+
+    public function testVisibilityPrivateFile()
     {
         if (IS_WINDOWS) {
             $this->markTestSkipped("Visibility not supported on Windows.");
@@ -268,6 +291,20 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
         $this->adapter->write('path.txt', 'contents', new Config());
         $this->adapter->setVisibility('path.txt', 'private');
         $output = $this->adapter->getVisibility('path.txt');
+        $this->assertInternalType('array', $output);
+        $this->assertArrayHasKey('visibility', $output);
+        $this->assertEquals('private', $output['visibility']);
+    }
+
+    public function testVisibilityPrivateDir()
+    {
+        if (IS_WINDOWS) {
+            $this->markTestSkipped("Visibility not supported on Windows.");
+        }
+
+        $this->adapter->createDir('private-dir', new Config());
+        $this->adapter->setVisibility('private-dir', 'private');
+        $output = $this->adapter->getVisibility('private-dir');
         $this->assertInternalType('array', $output);
         $this->assertArrayHasKey('visibility', $output);
         $this->assertEquals('private', $output['visibility']);
@@ -282,11 +319,37 @@ class LocalAdapterTests extends \PHPUnit_Framework_TestCase
     public function testConstructorWithLink()
     {
         $target = __DIR__.'/files/';
-        $link = __DIR__ . '/link_to_files';
+        $link = __DIR__.'/link_to_files';
         symlink($target, $link);
 
         $adapter = new Local($link);
         $this->assertEquals($target, $adapter->getPathPrefix());
         unlink($link);
+    }
+
+    /**
+     * @expectedException League\Flysystem\NotSupportedException
+     */
+    public function testLinkCausedUnsupportedException()
+    {
+        $root = __DIR__.'/files/';
+        $original = $root.'original.txt';
+        $link = $root.'link.txt';
+        file_put_contents($original, 'something');
+        symlink($original, $link);
+        $adapter = new Local($root);
+        $adapter->listContents();
+    }
+
+    public function testLinkIsSkipped()
+    {
+        $root = __DIR__.'/files/';
+        $original = $root.'original.txt';
+        $link = $root.'link.txt';
+        file_put_contents($original, 'something');
+        symlink($original, $link);
+        $adapter = new Local($root, LOCK_EX, Local::SKIP_LINKS);
+        $result = $adapter->listContents();
+        $this->assertCount(1, $result);
     }
 }

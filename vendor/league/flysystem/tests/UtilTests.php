@@ -7,8 +7,8 @@ class UtilTests extends \PHPUnit_Framework_TestCase
     public function testEmulateDirectories()
     {
         $input = [
-            ['dirname' => '', 'filename' => 'dummy'],
-            ['dirname' => 'something', 'filename' => 'dummy'],
+            ['dirname' => '', 'filename' => 'dummy', 'path' => 'dummy'],
+            ['dirname' => 'something', 'filename' => 'dummy', 'path' => 'something/dummy'],
             ['dirname' => 'something', 'path' => 'something/dirname', 'type' => 'dir'],
         ];
         $output = Util::emulateDirectories($input);
@@ -94,6 +94,10 @@ class UtilTests extends \PHPUnit_Framework_TestCase
         return [
             ['/dirname/', 'dirname'],
             ['dirname/..', ''],
+            ['dirname/../', ''],
+            ['dirname./', 'dirname.'],
+            ['dirname/./', 'dirname'],
+            ['dirname/.', 'dirname'],
             ['./dir/../././', ''],
             ['00004869/files/other/10-75..stl', '00004869/files/other/10-75..stl'],
             ['/dirname//subdir///subsubdir', 'dirname/subdir/subsubdir'],
