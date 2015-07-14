@@ -23,3 +23,5 @@ include::configuration_dropbox.asciidoc[]
 include::configuration_ftp.asciidoc[]
 
 include::configuration_local.asciidoc[]
+
+include::configuration_sftp.asciidoc[]
