@@ -1,17 +1,17 @@
 :icons:
-== Data Transfert
+= Data Transfert
 
-=== Description
+== Description
 Plugin permettant de transférer des données (ex : video après detection d'une intrusion, sauvegardes...) sur des serveurs distants au moyen des protocoles FTP, SFTP ou WebDav, mais aussi sur Dropbox ou en local.
 
 '''
-=== Configuration
+== Configuration
 include::configuration.asciidoc[]
 
 '''
-=== FAQ
+== FAQ
 include::faq.asciidoc[]
 
 '''
-=== Troubleshoting
+== Troubleshoting
 include::troubleshoting.asciidoc[]

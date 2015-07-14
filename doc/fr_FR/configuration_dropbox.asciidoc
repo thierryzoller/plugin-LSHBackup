@@ -2,25 +2,10 @@
 :experimental:
 :linkattrs:
 
-Pour les exemples ci-dessous, nous désirons transférer la totalité ou une partie du répertoire /usr/share/nginx/www/jeedom/tmp/DataTransfert
 
-.Contenu du répertoire :
- -----------------------------------------------------
--rw-r--r-- 1 root     root        5 Jul 12 19:21 test01.tar
--rw-r--r-- 1 root     root       13 Jul 12 19:22 test01.txt
--rw-r--r-- 1 root     root        7 Jul 12 19:21 test01.zip
--rw-r--r-- 1 root     root        9 Jul 12 19:22 test02.tar
--rw-r--r-- 1 root     root       11 Jul 12 19:22 test02.txt
--rw-r--r-- 1 root     root       11 Jul 12 19:21 test02.zip
--rw-r--r-- 1 root     root       12 Jul 12 19:22 test03.txt
--rw-r--r-- 1 root     root       10 Jul 12 19:21 test03.zip
--rw-r--r-- 1 root     root       17 Jul 12 19:22 test04.txt
--rw-r--r-- 1 root     root        8 Jul 12 19:22 test05.txt
- -----------------------------------------------------
+=== DropBox
 
-==== DropBox
-
-===== Prérequis
+==== Prérequis
 
 Pour effectuer un transfert sur un compte DropBox, il est nécessaire de créer une "Application DropBox".
 
@@ -57,7 +42,7 @@ Dans la section *OAuth 2*
 Générer votre token *Generated access token* (information nécessaire dans la configuration du plugin)
 |===
 
-===== Configuration du plugin / Dropbox
+==== Configuration du plugin / Dropbox
 
 [options="header,autowidth",role="text-justify"]
 |===
