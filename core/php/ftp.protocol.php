@@ -19,21 +19,21 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Ftp as Adapter;
+use League\Flysystem\Filesystem;
 
 function ftp_send($_eqLogic, $_source, $_cible, $_file) {
-    $filesystem = new Filesystem(new Adapter(array(
-        'host' => $_eqLogic->getConfiguration('server'),
-        'username' => $_eqLogic->getConfiguration('username'),
-        'password' => $_eqLogic->getConfiguration('password'),
-        /** optional config settings */
-        'port' => $_eqLogic->getConfiguration('port'),
-        'root' => $_cible,
-        'passive' => ($_eqLogic->getConfiguration('passive', 0) == 1) ? false : true,
-        'ssl' => ($_eqLogic->getConfiguration('ssl', 0) == 1) ? false : true,
-        'timeout' => 30,
-    )));
+	$filesystem = new Filesystem(new Adapter(array(
+		'host' => $_eqLogic->getConfiguration('server'),
+		'username' => $_eqLogic->getConfiguration('username'),
+		'password' => $_eqLogic->getConfiguration('password'),
+		/** optional config settings */
+		'port' => $_eqLogic->getConfiguration('port'),
+		'root' => $_cible,
+		'passive' => ($_eqLogic->getConfiguration('passive', 0) == 1) ? true : false,
+		'ssl' => ($_eqLogic->getConfiguration('ssl', 0) == 1) ? true : false,
+		'timeout' => 30,
+	)));
 
-    $filesystem->put($_file, file_get_contents($_source . '/' . $_file));
+	$filesystem->put($_file, file_get_contents($_source . '/' . $_file));
 }
