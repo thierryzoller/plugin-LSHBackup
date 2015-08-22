@@ -29,6 +29,7 @@ function webdav_send($_eqLogic, $_source, $_cible, $_file) {
 	$client = new Sabre\DAV\Client($settings);
 	if ($_eqLogic->getConfiguration('disableSslVerification', 0) == 1) {
 		$client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
+		$client->addCurlSetting(CURLOPT_SSL_VERIFYHOST, false);
 	}
 	$adapter = new League\Flysystem\WebDAV\WebDAVAdapter($client, $_cible);
 	$flysystem = new League\Flysystem\Filesystem($adapter);
