@@ -41,7 +41,7 @@ if (!isConnect('admin')) {
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Ne pas verifier le certificat SSL}}</label>
     <div class="col-sm-4">
-        <input class="eqLogicAttr form-control bootstrapSwitch" data-l1key="configuration" data-l2key="disableSslVerification"/>
+        <input type="checkbox" class="eqLogicAttr form-control bootstrapSwitch" data-l1key="configuration" data-l2key="disableSslVerification"/>
     </div>
 </div>
 
