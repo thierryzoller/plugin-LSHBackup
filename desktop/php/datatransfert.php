@@ -23,7 +23,7 @@ foreach ($eqLogics as $eqLogic) {
    </div>
 
    <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-    <legend>{{Mes équipements datatransfert}}
+    <legend><i class="icon techno-memory"></i>  {{Mes Equipements Datatransfert}}
     </legend>
     <div class="eqLogicThumbnailContainer">
       <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
@@ -97,13 +97,13 @@ foreach (datatransfert::supportedProtocol() as $protocol) {
 <div class="col-sm-6">
     <form class="form-horizontal">
         <fieldset>
-            <legend>{{Paramètres}}</legend>
+            <legend><i class="fa fa-wrench"></i>  {{Paramètres}}</legend>
             <div id="div_protocolParameters"></div>
         </fieldset>
     </form>
 </div>
 </div>
-<legend>{{Data transfert}}</legend>
+<legend><i class="fa fa-list-alt"></i>  {{Data transfert}}</legend>
 
 
 <a class="btn btn-success btn-sm cmdAction" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une commande Data transfert}}</a><br/><br/>
