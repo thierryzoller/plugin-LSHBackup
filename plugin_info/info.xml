@@ -3,12 +3,10 @@
     <id>datatransfert</id>
     <name>Data Transfert</name>
     <description>Plugin pour transferer de fichiers</description>
-    <icon>fa fa-exchange</icon>
     <licence>AGPL</licence>
-    <author>Loic Gevrey</author>
+    <author>Loic</author>
     <installation>Pour activer le sftp : sudo apt-get install libssh2-php</installation>
-    <require>1.60</require>
-    <version>1.0</version>
+    <require>2.0</require>
     <category>communication</category>
     <include type="php">datatransfert.inc</include>
 </info>
