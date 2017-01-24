@@ -2,7 +2,7 @@
     "plugins\/datatransfert\/desktop\/php\/datatransfert.php": {
         "Ajouter un équipement": "Ajouter un équipement",
         "Rechercher": "Rechercher",
-        "Mes équipements datatransfert": "Mes équipements datatransfert",
+        "Mes équipements datatransfert": "Mes équipements Data transfert",
         "Général": "Général",
         "Nom de l'équipement Data transfert": "Nom de l'équipement Data transfert",
         "Objet parent": "Objet parent",
@@ -24,11 +24,11 @@
         "Source": "Source",
         "Cible": "Cible",
         "Filtre sur fichier": "Filtre sur fichier",
-        "X fichiers les plus recent": "X fichiers les plus recent",
+        "X fichiers les plus recent": "X fichiers les plus récents",
         "Tester": "Tester"
     },
     "plugins\/datatransfert\/plugin_info\/info.xml": {
-        "Plugin pour transferer de fichiers": "Plugin pour transferer de fichiers",
-        "Pour activer le sftp : sudo apt-get install libssh2-php": "Pour activer le sftp : sudo apt-get install libssh2-php"
+        "Plugin pour transferer de fichiers": "Plugin pour transférer des fichiers",
+        "Pour activer le sftp : sudo apt-get install libssh2-php": "Pour activer le SFTP : sudo apt-get install libssh2-php"
     }
 }
