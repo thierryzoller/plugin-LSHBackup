@@ -1,11 +1,11 @@
 {
-	"id" : "denonavr",
-	"name" : "Denon",
-	"description" : "Plugin permettant de piloter les amplificateurs Denon",
+	"id" : "datatransfert",
+	"name" : "Data Transfert",
+	"description" : "Plugin pour transferer de fichiers",
 	"licence" : "AGPL",
 	"author" : "Loïc",
 	"require" : "3.0",
-	"category" : "multimedia",
-	"changelog" : "https://github.com/jeedom/plugin-denonavr/blob/stable/doc/#language#/changelog.asciidoc",
-	"documentation" : "https://github.com/jeedom/plugin-denonavr/blob/stable/doc/#language#/index.asciidoc"
+	"category" : "communication",
+	"changelog" : "https://github.com/jeedom/plugin-datatransfert/blob/stable/doc/#language#/changelog.asciidoc",
+	"documentation" : "https://github.com/jeedom/plugin-datatransfert/blob/stable/doc/#language#/index.asciidoc"
 }
