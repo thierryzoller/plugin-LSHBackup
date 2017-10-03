@@ -3,9 +3,9 @@
 	"name" : "Data Transfert",
 	"description" : "Plugin pour transferer de fichiers",
 	"licence" : "AGPL",
-	"author" : "Loïc",
+	"author" : "fensoft",
 	"require" : "3.0",
 	"category" : "communication",
-	"changelog" : "https://github.com/jeedom/plugin-datatransfert/blob/stable/doc/#language#/changelog.asciidoc",
-	"documentation" : "https://github.com/jeedom/plugin-datatransfert/blob/stable/doc/#language#/index.asciidoc"
+	"changelog" : "https://github.com/fensoft/plugin-datatransfert/blob/stable/doc/#language#/changelog.asciidoc",
+	"documentation" : "https://github.com/fensoft/plugin-datatransfert/blob/stable/doc/#language#/index.asciidoc"
 }

@@ -16,15 +16,26 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace DataTransfert;
+
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-function local_send($_eqLogic, $_source, $_cible, $_file) {
-    if(!file_exists($_cible) || !is_dir($_cible)){
-        throw new Exception(__('Répertoire cible innexistant : ',__FILE__).$_cible);
+class local extends DataTransfert {
+  function __construct() {
+  }
+
+  static function withEqLogic($_eqLogic) {
+    return new self();
+  }
+  
+  function put($_source, $_cible) {
+    if(!file_exists(dirname($_cible)) || !is_dir(dirname($_cible))){
+        throw new Exception(__('Répertoire cible innexistant : ',__FILE__).dirname($_cible));
         
     }
-    if(!copy($_source . '/' . $_file,$_cible.'/'.$_file)){
-        throw new Exception(__('La copie de : ',__FILE__).$_source . '/' . $_file.__(' vers : ',__FILE__).$_cible.'/'.$_file.__(' a échoué pour une raison incconue',__FILE__));
+    if(!copy($_source,$_cible)){
+        throw new Exception(__('La copie de : ',__FILE__).$_source.__(' vers : ',__FILE__).$_cible.__(' a échoué pour une raison incconue',__FILE__));
     }
+  }
 }

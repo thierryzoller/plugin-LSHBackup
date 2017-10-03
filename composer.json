@@ -9,8 +9,8 @@
         }
     ],
     "require": {
-	"league/flysystem-webdav": "1.0.*@dev",
-        "league/flysystem": "1.0.*@dev",
-	"league/flysystem-dropbox": "1.0.*@dev"
+        "league/flysystem-webdav": "1.0.*@dev",
+        "pskuza/rclonewrapper": "^0.31.0",
+        "hemant-mann/flysystem-dropbox": "^1.0"
     }
 }

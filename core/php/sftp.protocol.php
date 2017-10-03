@@ -16,31 +16,51 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace DataTransfert;
+
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-function sftp_send($_eqLogic, $_source, $_cible, $_file) {
-    $connection = ssh2_connect($_eqLogic->getConfiguration('server'), $_eqLogic->getConfiguration('port', 22));
+class sftp extends DataTransfert {
+  function __construct($_host, $_username, $_password, $_port) {
+    $this->server = $_host;
+    $this->username = $_username;
+    $this->password = $_password;
+    $this->port = $_port;
+  }
+
+  static function withEqLogic($_eqLogic) {
+    return new self($_eqLogic->getConfiguration('server'),
+	                $_eqLogic->getConfiguration('username'),
+					$_eqLogic->getConfiguration('password'),
+					$_eqLogic->getConfiguration('port', 22));
+  }
+  
+  function put($_source, $_cible) {
+    $connection = ssh2_connect($this->server, $this->port);
     if (!$connection) {
-        throw new Exception('Impossible de se connecter à ' . $_eqLogic->getConfiguration('server') . ' sur le port ' . $_eqLogic->getConfiguration('port', 22));
+        throw new \Exception('Impossible de se connecter à ' . $this->server . ' sur le port ' . $this->port);
     }
-    if (!ssh2_auth_password($connection, $_eqLogic->getConfiguration('username'), $_eqLogic->getConfiguration('password'))) {
-        throw new Exception('Authentification impossible avec le nom d\'utilisateur' . $_eqLogic->getConfiguration('username'));
+    if (!ssh2_auth_password($connection, $this->username, $this->password)) {
+        throw new \Exception('Authentification impossible avec le nom d\'utilisateur' . $this->username);
     }
-    $sftp = @ssh2_sftp($connection);
+    $sftp = ssh2_sftp($connection);
     if (!$sftp) {
-        throw new Exception("Impossible d\'initialiser le sous-système SFTP");
+        throw new \Exception("Impossible d\'initialiser le sous-système SFTP");
     }
-    $stream = fopen("ssh2.sftp://$sftp$_cible/$_file", 'w');
+    $stream = fopen("ssh2.sftp://$sftp$_cible", 'w');
     if (!$stream) {
-        throw new Exception('Impossible d\'ouvrir la cible :' . $_cible);
+        throw new \Exception('Impossible d\'ouvrir la cible :' . $_cible);
     }
-    $data_to_send = @file_get_contents($_source . '/' . $_file);
+    $data_to_send = fopen($_source, 'r');
     if ($data_to_send === false) {
-        throw new Exception('Impossible d\'ouvrir le fichier : ' . $_source . '/' . $_file);
+        throw new \Exception('Impossible d\'ouvrir le fichier : ' . $_source);
     }
-    if (@fwrite($stream, $data_to_send) === false) {
-        throw new Exception('Impossible d\'envoyer le fichier : ' . $_source . '/' . $_file);
-    }
-    @fclose($stream);
+	while (!feof($data_to_send)) {
+		if (fwrite($stream, fread($data_to_send, 8192)) === FALSE) {
+			   throw new \Exception('Impossible d\'envoyer le fichier : ' . $_source);
+		}
+	}
+    fclose($stream);
+  }
 }

@@ -16,22 +16,41 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace DataTransfert;
+
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
-function webdav_send($_eqLogic, $_source, $_cible, $_file) {
-	$settings = array(
-		'baseUri' => $_eqLogic->getConfiguration('baseUri'),
-		'userName' => $_eqLogic->getConfiguration('userName'),
-		'password' => $_eqLogic->getConfiguration('password'),
+class webdav extends DataTransfert {
+  function __construct($_baseUri, $_username, $_password, $_disableSslVerification) {
+    $this->baseUri = $_baseUri;
+    $this->username = $_username;
+    $this->password = $_password;
+    $this->disableSslVerification = $_disableSslVerification;
+  }
+
+  static function withEqLogic($_eqLogic) {
+    return new self($_eqLogic->getConfiguration('baseUri'),
+	                $_eqLogic->getConfiguration('userName'),
+					$_eqLogic->getConfiguration('password'),
+					($_eqLogic->getConfiguration('disableSslVerification') == 1) ? true : false);
+  }
+  
+  function put($_source, $_cible) {
+    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible . " with " . $this->baseUri);
+    $settings = array(
+		'baseUri' => $this->baseUri,
+		'userName' => $this->username,
+		'password' => $this->password
 	);
-	$client = new Sabre\DAV\Client($settings);
-	if ($_eqLogic->getConfiguration('disableSslVerification', 0) == 1) {
+	$client = new \Sabre\DAV\Client($settings);
+	if ($this->disableSslVerification) {
 		$client->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
 		$client->addCurlSetting(CURLOPT_SSL_VERIFYHOST, false);
 	}
-	$adapter = new League\Flysystem\WebDAV\WebDAVAdapter($client, $_cible);
-	$flysystem = new League\Flysystem\Filesystem($adapter);
-	$flysystem->put($_file, file_get_contents($_source . '/' . $_file));
+	$adapter = new \League\Flysystem\WebDAV\WebDAVAdapter($client, dirname($_cible));
+	$flysystem = new \League\Flysystem\Filesystem($adapter);
+	$flysystem->put(basename($_cible), fopen($_source, 'r'));
+  }
 }

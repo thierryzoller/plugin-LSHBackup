@@ -16,24 +16,47 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace DataTransfert;
+
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 use League\Flysystem\Adapter\Ftp as Adapter;
 use League\Flysystem\Filesystem;
 
-function ftp_send($_eqLogic, $_source, $_cible, $_file) {
-	$filesystem = new Filesystem(new Adapter(array(
-		'host' => $_eqLogic->getConfiguration('server'),
-		'username' => $_eqLogic->getConfiguration('username'),
-		'password' => $_eqLogic->getConfiguration('password'),
+class ftp extends DataTransfert {
+  function __construct($_host, $_username, $_password, $_port, $_passive, $_ssl) {
+    $this->host = $_host;
+    $this->username = $_username;
+    $this->password = $_password;
+    $this->port = $_port;
+    $this->passive = $_passive;
+    $this->ssl = $_ssl;
+  }
+
+  static function withEqLogic($_eqLogic) {
+    return new self($_eqLogic->getConfiguration('server'),
+	                $_eqLogic->getConfiguration('username'),
+					$_eqLogic->getConfiguration('password'),
+					$_eqLogic->getConfiguration('port'),
+	                ($_eqLogic->getConfiguration('passive') == 1) ? true : false,
+					($_eqLogic->getConfiguration('ssl') == 1) ? true : false);
+  }
+  
+  function put($_source, $_cible) {
+    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
+    $filesystem = new Filesystem(new Adapter(array(
+		'host' => $this->host,
+		'username' => $this->username,
+		'password' => $this->password,
 		/** optional config settings */
-		'port' => $_eqLogic->getConfiguration('port'),
-		'root' => $_cible,
-		'passive' => ($_eqLogic->getConfiguration('passive', 0) == 1) ? true : false,
-		'ssl' => ($_eqLogic->getConfiguration('ssl', 0) == 1) ? true : false,
+		'port' => $this->port,
+		'root' => dirname($_cible),
+		'passive' => $this->passive,
+		'ssl' => $this->ssl,
 		'timeout' => 30,
 	)));
 
-	$filesystem->put($_file, file_get_contents($_source . '/' . $_file));
+	$filesystem->putStream(basename($_cible), fopen($_source, 'r'));
+  }
 }

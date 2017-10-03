@@ -59,7 +59,7 @@ class datatransfertCmd extends cmd {
         $eqLogic = $this->getEqLogic();
         $protocol = $eqLogic->getConfiguration('protocol');
         include_file('core', $protocol . '.protocol', 'php', 'datatransfert');
-        $function = $protocol . '_send';
+		$class = call_user_func('DataTransfert\\' . $protocol . '::withEqLogic', $eqLogic);
         $cible = $this->getConfiguration('cible');
         $source = calculPath($this->getConfiguration('source'));
         $filelist = array();
@@ -73,12 +73,12 @@ class datatransfertCmd extends cmd {
             }
             usort($filelist, 'datatransfertCmd::orderFile');
             $filelist = array_slice($filelist, 0, $this->getConfiguration('filter_recentfile'));
-            foreach ($filelist as $file) {
-                $function($eqLogic, $source, $cible, $file['file']);
+			foreach ($filelist as $file) {
+			    $class->put($source . "/" . $file['file'], $cible . "/" . $file['file']);
             }
         } else {
             foreach (ls($source, $this->getConfiguration('filter_file', '*')) as $file) {
-                $function($eqLogic, $source, $cible, $file);
+                $class->put($source . '/' . $file, $cible . '/' . $file);
             }
         }
     }

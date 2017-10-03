@@ -19,17 +19,24 @@ if (!isConnect('admin')) {
     throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
+<a href='https://www.dropbox.com/developers/apps'>Dropbox Developers</a>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">{{Token}}</label>
+    <label class="col-sm-3 control-label">{{App key}}</label>
     <div class="col-sm-4">
-        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="token"/>
+        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="clientId"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-sm-3 control-label">{{Nom de  l'application}}</label>
+    <label class="col-sm-3 control-label">{{App secret}}</label>
     <div class="col-sm-4">
-        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="appName"/>
+        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="clientSecret"/>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Generated access token}}</label>
+    <div class="col-sm-4">
+        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="accessToken"/>
     </div>
 </div>
 

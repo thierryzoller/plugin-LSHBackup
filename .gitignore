@@ -4,5 +4,6 @@ core/config/common.config.php
 plugins
 sftp-config.json
 .project
+composer.phar
 vendor
 
