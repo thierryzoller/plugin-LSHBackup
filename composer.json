@@ -10,8 +10,9 @@
     ],
     "require": {
         "league/flysystem-webdav": "1.0.*@dev",
-        "pskuza/rclonewrapper": "^0.31.0",
         "hemant-mann/flysystem-dropbox": "^1.0",
-        "nao-pon/flysystem-google-drive": "^1.1"
+        "nao-pon/flysystem-google-drive": "^1.1",
+        "fensoft/rclonewrapper": "dev-master",
+        "league/flysystem-sftp": "^1.0"
     }
 }

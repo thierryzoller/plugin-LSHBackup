@@ -107,6 +107,8 @@ class datatransfertCmd extends cmd {
                 $class->put($source . '/' . $file, $cible . '/' . $file);
             }
         }
+		if ($this->getConfiguration('remove_old') != "")
+			$class->removeOlder($cible, $this->getConfiguration('remove_old'));
     }
 
     /*     * **********************Getteur Setteur*************************** */

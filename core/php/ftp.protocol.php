@@ -24,7 +24,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 use League\Flysystem\Adapter\Ftp as Adapter;
 use League\Flysystem\Filesystem;
 
-class ftp extends DataTransfert {
+class ftp extends Fly {
   function __construct($_host, $_username, $_password, $_port, $_passive, $_ssl) {
     $this->host = $_host;
     $this->username = $_username;
@@ -32,6 +32,7 @@ class ftp extends DataTransfert {
     $this->port = $_port;
     $this->passive = $_passive;
     $this->ssl = $_ssl;
+	$this->forceBase = true;
   }
 
   static function withEqLogic($_eqLogic) {
@@ -43,20 +44,21 @@ class ftp extends DataTransfert {
 					($_eqLogic->getConfiguration('ssl') == 1) ? true : false);
   }
   
-  function put($_source, $_cible) {
-    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
-    $filesystem = new Filesystem(new Adapter(array(
+  function getFly($_base) {
+    return new Filesystem(new Adapter(array(
 		'host' => $this->host,
 		'username' => $this->username,
 		'password' => $this->password,
 		/** optional config settings */
 		'port' => $this->port,
-		'root' => dirname($_cible),
+		'root' => $_base,
 		'passive' => $this->passive,
 		'ssl' => $this->ssl,
 		'timeout' => 30,
 	)));
-
-	$filesystem->putStream(basename($_cible), fopen($_source, 'r'));
+  }
+  
+  function timestamp($_val) {
+    return null;
   }
 }

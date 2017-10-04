@@ -22,13 +22,94 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 include_file('core', 'datatransfert', 'class', 'datatransfert');
 require_once dirname(__FILE__) . '/../../vendor/autoload.php';
 
+function timesort($a, $b)
+{
+    return strcmp($a["time"], $b["time"]);
+}
+
 class DataTransfert {
-  function DataTransfert($_eqLogic) {
-    log::add('datatransfert', 'debug', "unimplemented");
+  static function withEqLogic($_eqLogic) {
+    \log::add('datatransfert', 'debug', "withEqLogic unimplemented");
   }
 
   function put($_source, $_cible) {
-    log::add('datatransfert', 'debug', "unimplemented");
+    \log::add('datatransfert', 'debug', "put unimplemented");
+  }
+  
+  function ls($_cible) {
+    \log::add('datatransfert', 'debug', "list unimplemented");
+    return array();
+  }
+  
+  function remove($_cible) {
+    \log::add('datatransfert', 'debug', "remove unimplemented");
+  }
+  
+  function removeOlder($_cible, $numberToKeep) {
+    \log::add('datatransfert', 'debug', "removing " . $numberToKeep . " older files in " . $_cible);
+    $ls = $this->ls($_cible);
+    foreach ($ls as $val) {
+      if ($val["time"] == null) {
+        \log::add('datatransfert', 'debug', "time not implemented. clean skipped.");
+        return;
+      }
+    }
+    usort($ls, "\\DataTransfert\\timesort");
+    $todel = array_slice($ls, 0, -$numberToKeep);
+    foreach ($todel as $val) {
+      $this->remove($_cible . "/" . $val["name"]);
+    }
+  }
+}
+
+class Fly extends DataTransfert {
+  function basename($_file) {
+    if ($this->forceBase)
+      return basename($_file);
+    return $_file;
+  }
+  
+  function dirname($_file) {
+    if ($this->forceBase)
+      return trim(dirname($_file), "/");
+    return "";
+  }
+
+  function put($_source, $_cible) {
+    if (isset($this->removeDupes) && $this->removeDupes == true) {
+      foreach ($this->ls(dirname($_cible)) as $val) {
+	    if ($val["alias"] == basename($_cible)) {
+		  $this->remove(dirname($_cible) . "/" . $val["name"]);
+		}
+      }
+    }
+
+    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
+    $filesystem = $this->getFly($this->dirname($_cible));
+    $filesystem->putStream($this->basename($_cible), fopen($_source, 'r'));
+  }
+  
+  function timestamp($_val) {
+    return $_val["timestamp"];
+  }
+  
+  function ls($_source) {
+    $filesystem = $this->getFly($this->dirname($_source));
+    $res = array();
+    foreach ($filesystem->listContents($this->basename($_source), false) as $val) {
+      if ($val["type"] == "file") {
+        //\log::add('datatransfert', 'debug', "list " . json_encode($val));
+        array_push($res, array("name" => $val["basename"], "alias" => $val["filename"], "time" => $this->timestamp($val)));
+      }
+    }
+	//\log::add('datatransfert', 'debug', "list " . json_encode($res));
+    return $res;
+  }
+  
+  function remove($_cible) {
+    \log::add('datatransfert', 'debug', "removing " . $_cible);
+    $filesystem = $this->getFly($this->dirname($_cible));
+    $filesystem->delete($this->basename($_cible));
   }
 }
 ?>

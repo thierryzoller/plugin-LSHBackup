@@ -22,19 +22,20 @@ namespace DataTransfert;
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
-class gdrive extends DataTransfert {
+class gdrive extends Fly {
   function __construct($_clientId, $_clientSecret, $_accessToken) {
     $this->clientId = $_clientId;
 	$this->clientSecret = $_clientSecret;
 	$this->accessToken = $_accessToken;
+	$this->forceBase = false;
+	$this->removeDupes = true;
   }
 
   static function withEqLogic($_eqLogic) {
     return new self($_eqLogic->getConfiguration('clientId'), $_eqLogic->getConfiguration('clientSecret'), $_eqLogic->getConfiguration('accessToken'));
   }
   
-  function put($_source, $_cible) {
-    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
+  function getFly($_base) {
     $client = new \Google_Client();
     $client->setClientId($this->clientId);
     $client->setClientSecret($this->clientSecret);
@@ -42,8 +43,7 @@ class gdrive extends DataTransfert {
 
     $service = new \Google_Service_Drive($client);
 
-    $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, trim(dirname($_cible), "/"));
-    $filesystem = new \League\Flysystem\Filesystem($adapter);
-	$filesystem->putStream(basename($_cible), fopen($_source, 'r'));
+    $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, $_base);
+    return new \League\Flysystem\Filesystem($adapter);
   }
 }

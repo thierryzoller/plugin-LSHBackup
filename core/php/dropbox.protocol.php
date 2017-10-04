@@ -27,23 +27,22 @@ use Kunnu\Dropbox\DropboxApp;
 use League\Flysystem\Filesystem;
 use HemantMann\Flysystem\Dropbox\Adapter;
 
-class dropbox extends DataTransfert {
+class dropbox extends Fly {
   function __construct($_clientId, $_clientSecret, $_accessToken) {
     $this->clientId = $_clientId;
 	$this->clientSecret = $_clientSecret;
 	$this->accessToken = $_accessToken;
+	$this->forceBase = false;
   }
 
   static function withEqLogic($_eqLogic) {
     return new self($_eqLogic->getConfiguration('clientId'), $_eqLogic->getConfiguration('clientSecret'), $_eqLogic->getConfiguration('accessToken'));
   }
   
-  function put($_source, $_cible) {
-    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
+  function getFly($_base) {
     $app = new DropboxApp($this->clientId, $this->clientSecret, $this->accessToken);
     $dropboxClient = new \Kunnu\Dropbox\Dropbox($app);
     $adapter = new Adapter($dropboxClient);
-    $filesystem = new Filesystem($adapter);
-	$filesystem->putStream(basename($_cible), fopen($_source, 'r'));
+    return new Filesystem($adapter);
   }
 }

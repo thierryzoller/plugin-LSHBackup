@@ -20,13 +20,16 @@ namespace DataTransfert;
 
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+use League\Flysystem\Sftp\SftpAdapter;
+use League\Flysystem\Filesystem;
 
-class sftp extends DataTransfert {
+class sftp extends Fly {
   function __construct($_host, $_username, $_password, $_port) {
     $this->server = $_host;
     $this->username = $_username;
     $this->password = $_password;
     $this->port = $_port;
+	$this->forceBase = false;
   }
 
   static function withEqLogic($_eqLogic) {
@@ -36,31 +39,15 @@ class sftp extends DataTransfert {
 					$_eqLogic->getConfiguration('port', 22));
   }
   
-  function put($_source, $_cible) {
-    $connection = ssh2_connect($this->server, $this->port);
-    if (!$connection) {
-        throw new \Exception('Impossible de se connecter à ' . $this->server . ' sur le port ' . $this->port);
-    }
-    if (!ssh2_auth_password($connection, $this->username, $this->password)) {
-        throw new \Exception('Authentification impossible avec le nom d\'utilisateur' . $this->username);
-    }
-    $sftp = ssh2_sftp($connection);
-    if (!$sftp) {
-        throw new \Exception("Impossible d\'initialiser le sous-système SFTP");
-    }
-    $stream = fopen("ssh2.sftp://$sftp$_cible", 'w');
-    if (!$stream) {
-        throw new \Exception('Impossible d\'ouvrir la cible :' . $_cible);
-    }
-    $data_to_send = fopen($_source, 'r');
-    if ($data_to_send === false) {
-        throw new \Exception('Impossible d\'ouvrir le fichier : ' . $_source);
-    }
-	while (!feof($data_to_send)) {
-		if (fwrite($stream, fread($data_to_send, 8192)) === FALSE) {
-			   throw new \Exception('Impossible d\'envoyer le fichier : ' . $_source);
-		}
-	}
-    fclose($stream);
+  function getFly($_base) {
+	  $adapter = new SftpAdapter([
+		'host' => $this->server,
+		'port' => $this->port,
+		'username' => $this->username,
+		'password' => $this->password,
+		'root' => '/'
+	]);
+
+	return new Filesystem($adapter);
   }
 }

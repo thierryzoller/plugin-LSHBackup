@@ -23,6 +23,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class local extends DataTransfert {
   function __construct() {
+    $this->forceBase = false;
   }
 
   static function withEqLogic($_eqLogic) {
@@ -31,11 +32,25 @@ class local extends DataTransfert {
   
   function put($_source, $_cible) {
     if(!file_exists(dirname($_cible)) || !is_dir(dirname($_cible))){
-        throw new Exception(__('Répertoire cible innexistant : ',__FILE__).dirname($_cible));
+        throw new \Exception(__('Répertoire cible innexistant : ',__FILE__).dirname($_cible));
         
     }
     if(!copy($_source,$_cible)){
-        throw new Exception(__('La copie de : ',__FILE__).$_source.__(' vers : ',__FILE__).$_cible.__(' a échoué pour une raison incconue',__FILE__));
+        throw new \Exception(__('La copie de : ',__FILE__).$_source.__(' vers : ',__FILE__).$_cible.__(' a échoué pour une raison incconue',__FILE__));
     }
+  }
+  
+  function ls($_cible) {
+	$res = array();
+    foreach (scandir($_cible) as $fichier) {
+	  if ($fichier != "." and $fichier != "..") {
+	    array_push($res, array("name" => $fichier, "time" => filemtime($_cible . "/" . $fichier)));
+      }
+	}
+    return $res;
+  }
+  
+  function remove($_cible) {
+    unlink($_cible);
   }
 }

@@ -27,21 +27,41 @@ use Rclonewrapper\Rclonewrapper;
 class rclone extends DataTransfert {
   function __construct($_config) {
     $this->config = $_config;
+	$this->rclone = $this->getRclone();
   }
 
   static function withEqLogic($_eqLogic) {
     return new self($_eqLogic->getConfiguration('rclone'));
   }
   
+  function getRclone() {
+    $rclone_path = dirname(__FILE__) . '/../../external/rclone/rclone';
+    $rclone_config = tempnam(sys_get_temp_dir(),'rclone');
+    file_put_contents($rclone_config, $this->config);
+    $rclone = new Rclonewrapper($rclone_path, $rclone_config);
+    \log::add('datatransfert', 'debug', "rclone version " . $rclone->version());
+    \log::add('datatransfert', 'debug', "remotes " . json_encode($rclone->listremotes()));
+    $rclone->setremote($rclone->listremotes()[0]);
+    return $rclone;
+  }
+  
   function put($_source, $_cible) {
     \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
-	$rclone_path = dirname(__FILE__) . '/../../external/rclone/rclone';
-	$rclone_config = tempnam(sys_get_temp_dir(),'rclone');
-	file_put_contents($rclone_config, $this->config);
-	$rclone = new Rclonewrapper($rclone_path, $rclone_config);
-	\log::add('datatransfert', 'debug', "rclone version " . $rclone->version());
-	\log::add('datatransfert', 'debug', "remotes " . json_encode($rclone->listremotes()));
-	$rclone->setremote($rclone->listremotes()[0]);
-	$rclone->copy($_source, dirname($_cible));
+    $this->rclone->copy($_source, dirname($_cible));
+  }
+  
+  function ls($_source) {
+    $res = array();
+    foreach ($this->rclone->lsl($_source) as $val1) {
+      foreach ($val1 as $val) {
+        array_push($res, array("name" => $val["name"], "time" => strtotime(explode(".", $val["time"])[0])));
+      }
+    }
+    return $res;
+  }
+  
+  function remove($_source) {
+    \log::add('datatransfert', 'debug', "removing " . $_source);
+    $this->rclone->delete($_source);
   }
 }

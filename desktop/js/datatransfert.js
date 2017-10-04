@@ -61,7 +61,8 @@ function addCmdToTable(_cmd) {
     tr += '</td>';
     tr += '<td>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_file" placeholder="{{Filtre sur fichier}}">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_recentfile" placeholder="{{X fichiers les plus recent}}" style="margin-top : 5px;">';
+    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_recentfile" placeholder="{{n\'envoyer que X fichiers + recent}}" style="margin-top : 5px;">';
+	tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="remove_old" placeholder="{{ne conserver que X fichiers + recent}}" style="margin-top : 5px;">';
     tr += '</td>';
     tr += '<td>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" value="action" style="display : none;">';
