@@ -26,6 +26,32 @@ class datatransfert extends eqLogic {
 
     /*     * ***********************Methode static*************************** */
 
+	
+	public static function dependancy_info() {
+		$return = array();
+		$return['log'] = 'datatransfert_update';
+		$return['progress_file'] = '/tmp/datatransfer_in_progress';
+		$state = '';
+		if (file_exists(dirname(__FILE__) . "/../../external/rclone/rclone")) {
+			$state = 'ok';
+		} else {
+			$state = 'nok';
+		}
+		$return['state'] = $state;
+		return $return;
+	}
+
+	public static function dependancy_install() {
+		if (file_exists('/tmp/datatransfer_in_progress')) {
+			return;
+		}
+
+		log::remove('datatransfert_update');
+		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../external/rclone/download.sh';
+		$cmd .= ' >> ' . log::getPathToLog('datatransfert_update') . ' 2>&1 &';
+		exec($cmd);    
+	}
+
     public static function supportedProtocol() {
         $return = array();
         foreach (ls(dirname(__FILE__) . '/../php', '*.protocol.php') as $file) {
