@@ -96,7 +96,9 @@ class datatransfertCmd extends cmd {
             usort($filelist, 'datatransfertCmd::orderFile');
             $filelist = array_slice($filelist, 0, $this->getConfiguration('filter_recentfile'));
 			foreach ($filelist as $file) {
+			    \log::add('datatransfert', 'info', "uploading " . $source . "/" . $file['file'] . " to " . $cible . "/" . $file['file']);
 			    $class->put($source . "/" . $file['file'], $cible . "/" . $file['file']);
+				\log::add('datatransfert', 'info', "upload " . $source . "/" . $file['file'] . " to " . $cible . "/" . $file['file'] . " complete !");
             }
         } else {
             foreach (ls($source, $this->getConfiguration('filter_file', '*')) as $file) {

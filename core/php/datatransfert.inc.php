@@ -46,17 +46,22 @@ class DataTransfert {
   }
   
   function removeOlder($_cible, $numberToKeep) {
-    \log::add('datatransfert', 'info', "removing " . $numberToKeep . " older files in " . $_cible);
+    \log::add('datatransfert', 'info', "removing old files except " . $numberToKeep . " in " . $_cible);
     $ls = $this->ls($_cible);
+	$ls2 = array();
+	$lsskipped = array();
     foreach ($ls as $val) {
-      if ($val["time"] == null) {
-        \log::add('datatransfert', 'info', "time not implemented. clean skipped.");
-        return;
-      }
+      if ($val["time"] == null)
+        array_push($lsskipped, $val["name"]);
+      else
+	    array_push($ls2, $val);
     }
-    usort($ls, "\\DataTransfert\\timesort");
-    $todel = array_slice($ls, 0, -$numberToKeep);
+	if (count($lsskipped) != 0)
+	  \log::add('datatransfert', 'info', "unknown time, clean skipped for " . implode(',', $lsskipped));
+    usort($ls2, "\\DataTransfert\\timesort");
+    $todel = array_slice($ls2, 0, -$numberToKeep);
     foreach ($todel as $val) {
+	  \log::add('datatransfert', 'info', "removing " . $_cible);
       $this->remove($_cible . "/" . $val["name"]);
     }
   }
@@ -83,11 +88,8 @@ class Fly extends DataTransfert {
 		}
       }
     }
-
-    \log::add('datatransfert', 'info', "uploading " . $_source . " to " . $_cible);
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->putStream($this->basename($_cible), fopen($_source, 'r'));
-	\log::add('datatransfert', 'info', "upload " . $_source . " to " . $_cible . "complete !");
   }
   
   function timestamp($_val) {
@@ -108,7 +110,6 @@ class Fly extends DataTransfert {
   }
   
   function remove($_cible) {
-    \log::add('datatransfert', 'info', "removing " . $_cible);
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->delete($this->basename($_cible));
   }

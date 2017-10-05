@@ -46,9 +46,7 @@ class rclone extends DataTransfert {
   }
   
   function put($_source, $_cible) {
-    \log::add('datatransfert', 'info', "uploading " . $_source . " to " . $_cible);
     $this->rclone->copy($_source, dirname($_cible));
-	\log::add('datatransfert', 'info', "upload " . $_source . " to " . $_cible . "complete !");
   }
   
   function ls($_source) {
@@ -62,7 +60,6 @@ class rclone extends DataTransfert {
   }
   
   function remove($_source) {
-    \log::add('datatransfert', 'info', "removing " . $_source);
     $this->rclone->delete($_source);
   }
 }
