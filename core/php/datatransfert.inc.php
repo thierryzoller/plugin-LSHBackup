@@ -29,28 +29,28 @@ function timesort($a, $b)
 
 class DataTransfert {
   static function withEqLogic($_eqLogic) {
-    \log::add('datatransfert', 'debug', "withEqLogic unimplemented");
+    \log::add('datatransfert', 'error', "withEqLogic unimplemented");
   }
 
   function put($_source, $_cible) {
-    \log::add('datatransfert', 'debug', "put unimplemented");
+    \log::add('datatransfert', 'error', "put unimplemented");
   }
   
   function ls($_cible) {
-    \log::add('datatransfert', 'debug', "list unimplemented");
+    \log::add('datatransfert', 'error', "list unimplemented");
     return array();
   }
   
   function remove($_cible) {
-    \log::add('datatransfert', 'debug', "remove unimplemented");
+    \log::add('datatransfert', 'error', "remove unimplemented");
   }
   
   function removeOlder($_cible, $numberToKeep) {
-    \log::add('datatransfert', 'debug', "removing " . $numberToKeep . " older files in " . $_cible);
+    \log::add('datatransfert', 'info', "removing " . $numberToKeep . " older files in " . $_cible);
     $ls = $this->ls($_cible);
     foreach ($ls as $val) {
       if ($val["time"] == null) {
-        \log::add('datatransfert', 'debug', "time not implemented. clean skipped.");
+        \log::add('datatransfert', 'info', "time not implemented. clean skipped.");
         return;
       }
     }
@@ -84,9 +84,10 @@ class Fly extends DataTransfert {
       }
     }
 
-    \log::add('datatransfert', 'debug', "uploading " . $_source . " to " . $_cible);
+    \log::add('datatransfert', 'info', "uploading " . $_source . " to " . $_cible);
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->putStream($this->basename($_cible), fopen($_source, 'r'));
+	\log::add('datatransfert', 'info', "upload " . $_source . " to " . $_cible . "complete !");
   }
   
   function timestamp($_val) {
@@ -98,16 +99,16 @@ class Fly extends DataTransfert {
     $res = array();
     foreach ($filesystem->listContents($this->basename($_source), false) as $val) {
       if ($val["type"] == "file") {
-        //\log::add('datatransfert', 'debug', "list " . json_encode($val));
+        \log::add('datatransfert', 'debug', "list " . json_encode($val));
         array_push($res, array("name" => $val["basename"], "alias" => $val["filename"], "time" => $this->timestamp($val)));
       }
     }
-	//\log::add('datatransfert', 'debug', "list " . json_encode($res));
+	\log::add('datatransfert', 'debug', "list " . json_encode($res));
     return $res;
   }
   
   function remove($_cible) {
-    \log::add('datatransfert', 'debug', "removing " . $_cible);
+    \log::add('datatransfert', 'info', "removing " . $_cible);
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->delete($this->basename($_cible));
   }

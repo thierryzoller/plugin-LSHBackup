@@ -31,6 +31,7 @@ class local extends DataTransfert {
   }
   
   function put($_source, $_cible) {
+    \log::add('datatransfert', 'info', "uploading " . $_source . " to " . $_cible);
     if(!file_exists(dirname($_cible)) || !is_dir(dirname($_cible))){
         throw new \Exception(__('Répertoire cible innexistant : ',__FILE__).dirname($_cible));
         
@@ -38,6 +39,7 @@ class local extends DataTransfert {
     if(!copy($_source,$_cible)){
         throw new \Exception(__('La copie de : ',__FILE__).$_source.__(' vers : ',__FILE__).$_cible.__(' a échoué pour une raison incconue',__FILE__));
     }
+	\log::add('datatransfert', 'info', "upload " . $_source . " to " . $_cible . "complete !");
   }
   
   function ls($_cible) {
@@ -51,6 +53,7 @@ class local extends DataTransfert {
   }
   
   function remove($_cible) {
+    \log::add('datatransfert', 'info', "removing " . $_cible);
     unlink($_cible);
   }
 }

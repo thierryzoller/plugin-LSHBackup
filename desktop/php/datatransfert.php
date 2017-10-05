@@ -81,6 +81,7 @@ foreach (object::all() as $object) {
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-4">
                     <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
+					    <option disabled selected value>-- {{Choisir un type}} --</option>
                         <?php
 foreach (datatransfert::supportedProtocol() as $protocol) {
 	echo '<option value="' . $protocol . '">' . $protocol . '</option>';

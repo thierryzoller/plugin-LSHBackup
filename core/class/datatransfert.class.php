@@ -29,8 +29,8 @@ class datatransfert extends eqLogic {
 	
 	public static function dependancy_info() {
 		$return = array();
-		$return['log'] = 'datatransfert_update';
-		$return['progress_file'] = '/tmp/datatransfer_in_progress';
+		$return['log'] = __CLASS__ . '_update';
+		$return['progress_file'] = jeedom::getTmpFolder(__CLASS__) . '_progress';
 		$state = '';
 		if (file_exists(dirname(__FILE__) . "/../../external/rclone/rclone")) {
 			$state = 'ok';
@@ -42,14 +42,10 @@ class datatransfert extends eqLogic {
 	}
 
 	public static function dependancy_install() {
-		if (file_exists('/tmp/datatransfer_in_progress')) {
-			return;
-		}
-
-		log::remove('datatransfert_update');
-		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../external/rclone/download.sh';
-		$cmd .= ' >> ' . log::getPathToLog('datatransfert_update') . ' 2>&1 &';
-		exec($cmd);    
+		log::remove(__CLASS__ . '_update');
+		$cmd = dirname(__FILE__) . '/../../external/rclone/download.sh';
+		$cmd .= ' ' . jeedom::getTmpFolder(__CLASS__) . '_progress';
+		return array('script' => $cmd, 'log' => log::getPathToLog(__CLASS__ . '_update'));
 	}
 
     public static function supportedProtocol() {
