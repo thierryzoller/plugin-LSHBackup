@@ -13,6 +13,7 @@
         "hemant-mann/flysystem-dropbox": "^1.0",
         "nao-pon/flysystem-google-drive": "^1.1",
         "fensoft/rclonewrapper": "dev-master",
-        "league/flysystem-sftp": "^1.0"
+        "league/flysystem-sftp": "^1.0",
+        "robgridley/flysystem-smb": "^1.0"
     }
 }

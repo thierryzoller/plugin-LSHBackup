@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "116f081fa6f34cc306fb3a5cb522d989",
+    "content-hash": "f535227341ad938b6437cbedb9cb4978",
     "packages": [
         {
             "name": "fensoft/rclonewrapper",
@@ -460,6 +460,88 @@
             ],
             "description": "The Flysystem Adapter for Dropbox",
             "time": "2017-08-10T17:15:14+00:00"
+        },
+        {
+            "name": "icewind/smb",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/icewind1991/SMB.git",
+                "reference": "6691355d9314ac3a8cb9ec9446e4c26e8aab09d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/icewind1991/SMB/zipball/6691355d9314ac3a8cb9ec9446e4c26e8aab09d0",
+                "reference": "6691355d9314ac3a8cb9ec9446e4c26e8aab09d0",
+                "shasum": ""
+            },
+            "require": {
+                "icewind/streams": ">=0.2.0",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Icewind\\SMB\\": "src/",
+                    "Icewind\\SMB\\Test\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Appelman",
+                    "email": "icewind@owncloud.com"
+                }
+            ],
+            "description": "php wrapper for smbclient and libsmbclient-php",
+            "time": "2017-08-16T16:08:57+00:00"
+        },
+        {
+            "name": "icewind/streams",
+            "version": "0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/icewind1991/Streams.git",
+                "reference": "6bfd2fdbd99319f5e010d0a684409189a562cb1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/icewind1991/Streams/zipball/6bfd2fdbd99319f5e010d0a684409189a562cb1e",
+                "reference": "6bfd2fdbd99319f5e010d0a684409189a562cb1e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "satooshi/php-coveralls": "v1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Icewind\\Streams\\Tests\\": "tests/",
+                    "Icewind\\Streams\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Appelman",
+                    "email": "icewind@owncloud.com"
+                }
+            ],
+            "description": "A set of generic stream wrappers",
+            "time": "2016-12-02T14:21:23+00:00"
         },
         {
             "name": "kunalvarma05/dropbox-php-sdk",
@@ -1136,6 +1218,52 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
+        },
+        {
+            "name": "robgridley/flysystem-smb",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robgridley/flysystem-smb.git",
+                "reference": "0651b793640811cdf2b89ae7393ffef7d05bf4fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robgridley/flysystem-smb/zipball/0651b793640811cdf2b89ae7393ffef7d05bf4fd",
+                "reference": "0651b793640811cdf2b89ae7393ffef7d05bf4fd",
+                "shasum": ""
+            },
+            "require": {
+                "icewind/smb": "^2.0",
+                "league/flysystem": "~1.0",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RobGridley\\Flysystem\\Smb\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Gridley",
+                    "email": "me@robgridley.com"
+                }
+            ],
+            "description": "Flysystem adapter for Icewind SMB.",
+            "keywords": [
+                "Flysystem",
+                "samba",
+                "smb"
+            ],
+            "time": "2017-03-10T16:24:19+00:00"
         },
         {
             "name": "sabre/dav",

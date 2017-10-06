@@ -145,7 +145,7 @@ class datatransfertCmd extends cmd {
             }
             foreach ($res as $file) {
                 \log::add('datatransfert', 'info', "uploading " . $source . "/" . $file . " to " . $cible . "/" . $file);
-                if (dirname($file) != "")
+                if (dirname($file) != "" && dirname($file) != null)
                     $class->mkdir(dirname($cible . "/" . $file));
                 $class->put($source . "/" . $file, $cible . "/" . $file);
                 \log::add('datatransfert', 'info', "upload " . $source . "/" . $file . " to " . $cible . "/" . $file . " complete !");
