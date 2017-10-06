@@ -46,4 +46,11 @@ class gdrive extends Fly {
     $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, $_base);
     return new \League\Flysystem\Filesystem($adapter);
   }
+  
+  function put($_source, $_cible) {
+    parent::put($_source, explode("/", $_cible)[0] . "/" . implode("_", array_slice(explode("/", $_cible), 1)));
+  }
+  
+  function mkdir($_cible) {
+  }
 }

@@ -54,22 +54,29 @@ function addCmdToTable(_cmd) {
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="name">';
     tr += '</td>';
     tr += '<td>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="source" placeholder="{{Source}}">';
+    if (init(_cmd.eqType) != 'datatransfertInfo') {
+        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="source" placeholder="{{Source}}" value="' + backup_path + '">';
+    }
     tr += '</td>';
     tr += '<td>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="cible" placeholder="{{Cible}}">';
+    if (init(_cmd.eqType) != 'datatransfertInfo') {
+        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="cible" placeholder="{{Cible}}">';
+    }
     tr += '</td>';
     tr += '<td>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_file" placeholder="{{Filtre sur fichier}}">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_recentfile" placeholder="{{n\'envoyer que X fichiers + recent}}" style="margin-top : 5px;">';
-	tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="remove_old" placeholder="{{ne conserver que X fichiers + recent}}" style="margin-top : 5px;">';
+    if (init(_cmd.eqType) != 'datatransfertInfo') {
+        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_file" placeholder="{{Filtre sur fichier}}">';
+        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="filter_recentfile" placeholder="{{n\'envoyer que X fichiers + recent}}" style="margin-top : 5px;">';
+        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="remove_old" placeholder="{{ne conserver que X fichiers + recent}}" style="margin-top : 5px;">';
+    }
     tr += '</td>';
     tr += '<td>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" value="action" style="display : none;">';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" value="other" style="display : none;">';
     if (is_numeric(_cmd.id)) {
         tr += '<a class="btn btn-default btn-xs cmdAction expertModeVisible" data-action="configure"><i class="fa fa-cogs"></i></a> ';
-        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
+        if (init(_cmd.eqType) != 'datatransfertInfo')
+            tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
     }
     tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
     tr += '</tr>';

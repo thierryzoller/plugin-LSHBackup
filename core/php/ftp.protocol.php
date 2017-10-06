@@ -59,12 +59,6 @@ class ftp extends Fly {
   }
   
   function timestamp($_val) {
-	$formats = array("*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz");
-	foreach ($formats as $format => $example) {
-		$date = \DateTime::createFromFormat($format, $_val["basename"]);
-		if ($date)
-			return $date->format('U');
-	}
 	return null;
   }
 }

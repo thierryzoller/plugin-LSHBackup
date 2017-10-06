@@ -28,6 +28,16 @@ function timesort($a, $b)
 }
 
 class DataTransfert {
+  static function guessTimestamp($_name) {
+    $formats = array("*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz");
+    foreach ($formats as $format => $example) {
+      $date = \DateTime::createFromFormat($format, $_name);
+      if ($date)
+        return $date->format('U');
+    }
+    return null;
+  }
+
   static function withEqLogic($_eqLogic) {
     \log::add('datatransfert', 'error', "withEqLogic unimplemented");
   }
@@ -45,23 +55,30 @@ class DataTransfert {
     \log::add('datatransfert', 'error', "remove unimplemented");
   }
   
+  function mkdir($_cible) {
+    \log::add('datatransfert', 'error', "mkdir unimplemented");
+  }
+  
   function removeOlder($_cible, $numberToKeep) {
     \log::add('datatransfert', 'info', "removing old files except " . $numberToKeep . " in " . $_cible);
     $ls = $this->ls($_cible);
-	$ls2 = array();
-	$lsskipped = array();
+    $ls2 = array();
+    $lsskipped = array();
     foreach ($ls as $val) {
+      $guessed = $this->guessTimestamp($val["name"]);
+      if ($guessed != null)
+        $val["time"] = $guessed;
       if ($val["time"] == null)
         array_push($lsskipped, $val["name"]);
       else
-	    array_push($ls2, $val);
+        array_push($ls2, $val);
     }
-	if (count($lsskipped) != 0)
-	  \log::add('datatransfert', 'info', "unknown time, clean skipped for " . implode(',', $lsskipped));
+    if (count($lsskipped) != 0)
+      \log::add('datatransfert', 'info', "unknown time, clean skipped for " . implode(',', $lsskipped));
     usort($ls2, "\\DataTransfert\\timesort");
     $todel = array_slice($ls2, 0, -$numberToKeep);
     foreach ($todel as $val) {
-	  \log::add('datatransfert', 'info', "removing " . $_cible);
+      \log::add('datatransfert', 'info', "removing " . $_cible);
       $this->remove($_cible . "/" . $val["name"]);
     }
   }
@@ -83,9 +100,11 @@ class Fly extends DataTransfert {
   function put($_source, $_cible) {
     if (isset($this->removeDupes) && $this->removeDupes == true) {
       foreach ($this->ls(dirname($_cible)) as $val) {
-	    if ($val["alias"] == basename($_cible)) {
-		  $this->remove(dirname($_cible) . "/" . $val["name"]);
-		}
+        \log::add('datatransfert', 'debug', "dupes " . $val["alias"] . "==" . basename($_cible));
+      
+        if ($val["alias"] == basename($_cible)) {
+          $this->remove(dirname($_cible) . "/" . $val["name"]);
+        }
       }
     }
     $filesystem = $this->getFly($this->dirname($_cible));
@@ -102,16 +121,21 @@ class Fly extends DataTransfert {
     foreach ($filesystem->listContents($this->basename($_source), false) as $val) {
       if ($val["type"] == "file") {
         \log::add('datatransfert', 'debug', "list " . json_encode($val));
-        array_push($res, array("name" => $val["basename"], "alias" => $val["filename"], "time" => $this->timestamp($val)));
+        array_push($res, array("name" => $val["basename"], "alias" => $val["filename"] . ($val["extension"]==""?"":".".$val["extension"]), "time" => $this->timestamp($val)));
       }
     }
-	\log::add('datatransfert', 'debug', "list " . json_encode($res));
+    \log::add('datatransfert', 'debug', "list " . json_encode($res));
     return $res;
   }
   
   function remove($_cible) {
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->delete($this->basename($_cible));
+  }
+  
+  function mkdir($_cible) {
+    $filesystem = $this->getFly("");
+    $filesystem->createDir($_cible);
   }
 }
 ?>

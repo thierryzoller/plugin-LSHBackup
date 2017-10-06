@@ -6,6 +6,10 @@ sendVarToJS('eqType', 'datatransfert');
 $eqLogics = eqLogic::byType('datatransfert');
 ?>
 
+<script type="text/javascript">
+  var backup_path = "<?php echo realpath(calculPath(config::byKey('backup::path'))); ?>";
+</script>
+
 <div class="row row-overflow">
     <div class="col-lg-2 col-md-3 col-sm-4">
         <div class="bs-sidebar">

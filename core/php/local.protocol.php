@@ -53,4 +53,8 @@ class local extends DataTransfert {
   function remove($_cible) {
     unlink($_cible);
   }
+  
+  function mkdir($_cible) {
+    @mkdir($_cible, 0755, true);
+  }
 }

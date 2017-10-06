@@ -62,4 +62,8 @@ class rclone extends DataTransfert {
   function remove($_source) {
     $this->rclone->delete($_source);
   }
+  
+  function mkdir($_source) {
+    $this->rclone->mkdir($_source);
+  }
 }
