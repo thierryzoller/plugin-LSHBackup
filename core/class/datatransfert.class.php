@@ -25,7 +25,8 @@ class datatransfert extends eqLogic {
         $return['log'] = __CLASS__ . '_update';
         $return['progress_file'] = jeedom::getTmpFolder(__CLASS__) . '_progress';
         $state = '';
-        if (file_exists(dirname(__FILE__) . "/../../external/rclone/rclone")) {
+        exec(dirname(__FILE__) . "/../../external/check.sh", $out, $ret);
+        if ($ret == 0) {
             $state = 'ok';
         } else {
             $state = 'nok';
@@ -36,7 +37,7 @@ class datatransfert extends eqLogic {
 
     public static function dependancy_install() {
         log::remove(__CLASS__ . '_update');
-        $cmd = dirname(__FILE__) . '/../../external/rclone/download.sh';
+        $cmd = dirname(__FILE__) . '/../../external/install.sh';
         $cmd .= ' ' . jeedom::getTmpFolder(__CLASS__) . '_progress';
         return array('script' => $cmd, 'log' => log::getPathToLog(__CLASS__ . '_update'));
     }
