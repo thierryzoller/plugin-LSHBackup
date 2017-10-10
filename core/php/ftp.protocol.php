@@ -21,17 +21,17 @@ namespace DataTransfert;
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-use League\Flysystem\Adapter\Ftp as Adapter;
 use League\Flysystem\Filesystem;
 
 class ftp extends Fly {
-  function __construct($_host, $_username, $_password, $_port, $_passive, $_ssl) {
+  function __construct($_host, $_username, $_password, $_port, $_passive, $_ssl, $_ftpd) {
     $this->host = $_host;
     $this->username = $_username;
     $this->password = $_password;
     $this->port = $_port;
     $this->passive = $_passive;
     $this->ssl = $_ssl;
+    $this->ftpd = $_ftpd;
 	$this->forceBase = true;
     $this->preciseProgress = true;
   }
@@ -42,21 +42,26 @@ class ftp extends Fly {
 					$_eqLogic->getConfiguration('password'),
 					$_eqLogic->getConfiguration('port'),
 	                ($_eqLogic->getConfiguration('passive') == 1) ? true : false,
-					($_eqLogic->getConfiguration('ssl') == 1) ? true : false);
+					($_eqLogic->getConfiguration('ssl') == 1) ? true : false,
+                    ($_eqLogic->getConfiguration('ftpd') == 1) ? true : false);
   }
   
   function getFly($_base) {
-    return new Filesystem(new Adapter(array(
+    $params = array(
 		'host' => $this->host,
 		'username' => $this->username,
 		'password' => $this->password,
 		/** optional config settings */
 		'port' => $this->port,
-		'root' => $_base,
+		'root' => "/" . $_base,
 		'passive' => $this->passive,
 		'ssl' => $this->ssl,
 		'timeout' => 30,
-	)));
+	);
+    if ($this->ftpd)
+      return new Filesystem(new \League\Flysystem\Adapter\Ftpd($params));
+    else
+      return new Filesystem(new \League\Flysystem\Adapter\Ftp($params));
   }
   
   function timestamp($_val) {

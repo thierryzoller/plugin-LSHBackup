@@ -2,7 +2,7 @@
 cd `dirname $0`
 VERSION=v1.38
 case `uname -m` in
-  x86)
+  x86|i686)
     PLATFORM=386
 	;;
   x86_64)
