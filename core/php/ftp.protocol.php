@@ -33,6 +33,7 @@ class ftp extends Fly {
     $this->passive = $_passive;
     $this->ssl = $_ssl;
 	$this->forceBase = true;
+    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {

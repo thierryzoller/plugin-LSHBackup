@@ -30,6 +30,7 @@ class sftp extends Fly {
     $this->password = $_password;
     $this->port = $_port;
 	$this->forceBase = false;
+    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {

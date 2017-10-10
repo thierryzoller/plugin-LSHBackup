@@ -29,6 +29,7 @@ class gdrive extends Fly {
 	$this->accessToken = $_accessToken;
 	$this->forceBase = false;
 	$this->removeDupes = true;
+    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {

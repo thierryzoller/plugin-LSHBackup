@@ -30,6 +30,7 @@ class webdav extends Fly {
     $this->disableSslVerification = $_disableSslVerification;
 	$this->forceBase = true;
 	$this->nextcloud = $_nextcloud;
+    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {

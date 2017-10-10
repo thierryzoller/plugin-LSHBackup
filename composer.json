@@ -6,13 +6,27 @@
         {
             "name": "Loic",
             "email": "loic@jeedom.com"
+        },
+        {
+            "name": "fensoft",
+            "email": "fensoft@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/fensoft/Rclonewrapper"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/fensoft/flysystem-webdav"
         }
     ],
     "require": {
-        "league/flysystem-webdav": "1.0.*@dev",
         "hemant-mann/flysystem-dropbox": "^1.0",
         "nao-pon/flysystem-google-drive": "^1.1",
         "fensoft/rclonewrapper": "dev-master",
+        "fensoft/flysystem-webdav": "dev-master",
         "league/flysystem-sftp": "^1.0",
         "robgridley/flysystem-smb": "^1.0"
     }

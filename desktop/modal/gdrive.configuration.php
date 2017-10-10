@@ -19,8 +19,13 @@ if (!isConnect('admin')) {
     throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
-<a href='https://github.com/ivanvermeyen/laravel-google-drive-demo/tree/master/README'>GDrive Developers</a>
 
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Installation Google Drive}}</label>
+    <div class="col-sm-4">
+        <a class="btn btn-primary btn-xs" href='https://github.com/ivanvermeyen/laravel-google-drive-demo/tree/master/README' target="_blank">{{Lien}}</a>
+    </div>
+</div>
 <div class="form-group">
     <label class="col-sm-3 control-label">{{App client id}}</label>
     <div class="col-sm-4">

@@ -4,7 +4,7 @@ cd `dirname $0`
 NBSTEPS=`ls */install.sh | wc -l`
 STEP=$((100/$NBSTEPS))
 for i in */install.sh; do
-  echo -- installation $i --
+  echo -- installing $i --
   PROG=$(($PROG+$STEP))
   eval $i
   echo $PROG > $1

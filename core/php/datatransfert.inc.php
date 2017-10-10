@@ -28,6 +28,14 @@ function timesort($a, $b)
 }
 
 class DataTransfert {
+  function setProgressCallback($class) {
+    $this->progressCallback = $class;
+  }
+
+  function setProgress($id, $progress) {
+    $this->progressCallback->setProgress($id, $progress);
+  }
+
   static function guessTimestamp($_name) {
     $formats = array("*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz");
     foreach ($formats as $format => $example) {
@@ -84,6 +92,79 @@ class DataTransfert {
   }
 }
 
+class ProgressWrapper {
+  var $fp;
+  var $id;
+  var $callback;
+
+  static $registered = array();
+  static $counter = 0;
+
+  function stream_open($path, $mode, $options, &$opened_path) {
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_open " . $path);
+    $url = parse_url($path);
+    $this->fp = self::$registered[$url['host']]["content"];
+    $this->id = self::$registered[$url['host']]["id"];
+    $this->callback = self::$registered[$url['host']]["callback"];
+    return true;
+  }
+  function stream_read($count) {
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_read " . $count);
+    $res = fread($this->fp, $count);
+    $this->callback->setProgress($this->id, ftell($this->fp));
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_read=" . strlen($res));
+    return $res;
+  }
+  function stream_eof() {
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_eof");
+    $res = feof($this->fp);
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_eof=" . ($res ? "1" : "0"));
+    return $res;
+  }
+  function stream_tell() {
+   // \log::add('datatransfert', 'debug', "ProgressWrapper::stream_tell");
+    $res = ftell($this->fp);
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_tell=" . $res);
+    return $res;
+  }
+  function stream_stat() {
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_stat");
+    //return self::$stat;
+    $res = fstat($this->fp);
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
+    return $res;
+  }
+  function stream_seek($offset , $whence) {
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_seek " . $offset . " " . $whence);
+    $res = fseek($this->fp, $offset, $whence);
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_seek=" . $res);
+    return 0 === $res;
+  }
+  static function url_stat($path, $flags) {
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::url_stat " . $path);
+    //return self::$stat;
+    $url = parse_url($path);
+    $fp = self::$registered[$url['host']]["content"];
+    $res = fstat($fp);
+    //\log::add('datatransfert', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
+    return $res;
+  }
+  static function wrap($what, $id, $callback) {
+    if (!in_array("datatransfert", stream_get_wrappers()))
+      stream_wrapper_register("datatransfert", __class__);
+    self::$counter = self::$counter + 1;
+    self::$registered[self::$counter] = array("content" => $what, "id" => $id, "callback" => $callback);
+    return fopen("datatransfert://" . self::$counter, "r+");
+  }
+  
+  static function pipe_streams($in, $out)
+  {
+    $size = 0;
+    while (!feof($in)) $size += fwrite($out,fread($in,8192));
+    return $size;
+  }
+}
+
 class Fly extends DataTransfert {
   function basename($_file) {
     if ($this->forceBase)
@@ -100,15 +181,18 @@ class Fly extends DataTransfert {
   function put($_source, $_cible) {
     if (isset($this->removeDupes) && $this->removeDupes == true) {
       foreach ($this->ls(dirname($_cible)) as $val) {
-        \log::add('datatransfert', 'debug', "dupes " . $val["alias"] . "==" . basename($_cible));
-      
+        //\log::add('datatransfert', 'debug', "dupes " . $val["alias"] . "==" . basename($_cible));
         if ($val["alias"] == basename($_cible)) {
           $this->remove(dirname($_cible) . "/" . $val["name"]);
         }
       }
     }
     $filesystem = $this->getFly($this->dirname($_cible));
-    $filesystem->putStream($this->basename($_cible), fopen($_source, 'r'));
+    if ($this->preciseProgress)
+      $fp = ProgressWrapper::wrap(fopen($_source, 'r'), $_source, $this);
+    else
+      $fp = fopen($_source, 'r');
+    $filesystem->putStream($this->basename($_cible), $fp);
   }
   
   function timestamp($_val) {
@@ -129,11 +213,13 @@ class Fly extends DataTransfert {
   }
   
   function remove($_cible) {
+    \log::add('datatransfert', 'debug', "remove " . $_cible);
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->delete($this->basename($_cible));
   }
   
   function mkdir($_cible) {
+    \log::add('datatransfert', 'debug', "mkdir " . $_cible);
     $filesystem = $this->getFly("");
     $filesystem->createDir($_cible);
   }

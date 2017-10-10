@@ -52,15 +52,17 @@ class datatransfert extends eqLogic {
     }
 
     public function postSave() {
-        foreach ($this->getCmd() as $cmd) {
-            if (strpos($cmd->getName(), "_status") !== false)
+        foreach ($this->getCmd() as $tcmd) {
+            if (strpos($tcmd->getName(), "_status") !== false || strpos($tcmd->getName(), "_progress") !== false)
                 continue;
+
+            $cmd = $tcmd;
             $id = $cmd->getName() . "_status";
             $logic = cmd::byEqLogicIdAndLogicalId($this->getId(), $id);
             if (!is_object($logic)) {
                 $cmd = new cmd();
                 $cmd->setEventOnly(1);
-                $cmd->setIsHistorized(1);
+                $cmd->setIsHistorized(0);
                 $cmd->setOrder(count($this->getCmd()));
                 $cmd->setEqLogic_id($this->getId());
                 $cmd->setEqType('datatransfertInfo');
@@ -70,17 +72,38 @@ class datatransfert extends eqLogic {
                 $cmd->setSubType('string');
                 $cmd->setIsVisible(false);
                 $cmd->save();
-                $logic = $cmd;
+            }
+            $cmd = $tcmd;
+            $id = $cmd->getName() . "_progress";
+            $logic = cmd::byEqLogicIdAndLogicalId($this->getId(), $id);
+            if (!is_object($logic)) {
+                $cmd = new cmd();
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(0);
+                $cmd->setOrder(count($this->getCmd()));
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setEqType('datatransfertInfo');
+                $cmd->setLogicalId($id);
+                $cmd->setName($cmd->getLogicalId());
+                $cmd->setType('info');
+                $cmd->setSubType('numeric');
+                $cmd->setIsVisible(false);
+                $cmd->save();
             }
         }
     }
-    
+
     public function setUploadStatus($name, $status) {
         $logic = cmd::byEqLogicIdAndLogicalId($this->getId(), $name . "_status");
         if ($logic)
             $logic->event($status);
-        else
-            \log::add('datatransfert', 'info', "missing: " . $name);
+    }
+
+    public function setUploadProgress($name, $progress) {
+        $logic = cmd::byEqLogicIdAndLogicalId($this->getId(), $name . "_progress");
+        if ($logic)
+            $logic->event($progress);
+        \log::add('datatransfert', 'debug', "progress " . $name . ": " . $progress);
     }
 }
 
@@ -96,17 +119,15 @@ class datatransfertCmd extends cmd {
         $files = scandir($dir);
         foreach($files as $key => $value){
             $path = realpath($dir."/".$value);
-            if(!is_dir($path)) {
+            if(!is_dir($path))
                 $results[] = $path;
-            } else if($value != "." && $value != "..") {
+            else if($value != "." && $value != "..")
                 self::getDirContents($path, $results);
-                //$results[] = $path;
-            }
         }
 
         return $results;
     }
-    
+
     public function ls($dir, $filter) {
         $lst = array();
         self::getDirContents($dir, $lst);
@@ -118,18 +139,49 @@ class datatransfertCmd extends cmd {
         return $res;
     }
 
+    public function setProgressTotal($total) {
+        $this->progress = array();
+        $this->progressCurrent = 0;
+        $this->progressTotal = $total;
+    }
+
+    public function setProgress($id, $size) {
+        $this->progress[$id] = $size;
+        $total = 0;
+        foreach ($this->progress as $val)
+            $total = $total + $val;
+        if ($this->progressTotal == 0) {
+            if ($this->progressCurrent != 100) {
+                $this->progressCurrent = 100;
+                $this->getEqLogic()->setUploadProgress($this->getName(), 100);
+            }
+        } else {
+            $progress = intval(100 * $total / $this->progressTotal);
+            if ($this->progressCurrent != $progress) {
+                $this->progressCurrent = $progress;
+                if ($progress == 100 || $progress == 0 || !isset($this->progressCurrentTime) || $this->progressCurrentTime + 1 < time()) {
+                    $this->progressCurrentTime = time();
+                    $this->getEqLogic()->setUploadProgress($this->getName(), $progress);
+                }
+            }
+        }
+    }
+
     public function execute($_options = null) {
         try {
             $eqLogic = $this->getEqLogic();
             $eqLogic->setUploadStatus($this->getName(), "uploading");
+            $eqLogic->setUploadProgress($this->getName(), 0);
             $protocol = $eqLogic->getConfiguration('protocol');
             include_file('core', $protocol . '.protocol', 'php', 'datatransfert');
             $class = call_user_func('DataTransfert\\' . $protocol . '::withEqLogic', $eqLogic);
+            $class->setProgressCallback($this);
             $cible = $this->getConfiguration('cible');
-            $source = calculPath($this->getConfiguration('source'));
+            $source = "/" . trim(calculPath($this->getConfiguration('source')), " /");
+            if (!is_dir($source))
+                throw new \Exception(__('Dossier source manquant : ',__FILE__) . $source);
             $res = array();
             $filter_recentfile = $this->getConfiguration('filter_recentfile');
-            //$this->ls($source, $this->getConfiguration('filter_file', '*'));
             if ($this->getConfiguration('filter_recentfile') != '') {
                 $filelist = array();
                 foreach ($this->ls($source, $this->getConfiguration('filter_file', '*')) as $file) {
@@ -144,12 +196,18 @@ class datatransfertCmd extends cmd {
             } else {
                 $res = $this->ls($source, $this->getConfiguration('filter_file', '*'));
             }
+            $total = 0;
+            foreach ($res as $file) {
+                $total = $total + filesize($source . "/" . $file);;
+            }
+            $this->setProgressTotal($total);
             foreach ($res as $file) {
                 \log::add('datatransfert', 'info', "uploading " . $source . "/" . $file . " to " . $cible . "/" . $file);
                 if (dirname($file) != "" && dirname($file) != null)
                     $class->mkdir(dirname($cible . "/" . $file));
                 $class->put($source . "/" . $file, $cible . "/" . $file);
                 \log::add('datatransfert', 'info', "upload " . $source . "/" . $file . " to " . $cible . "/" . $file . " complete !");
+                $this->setProgress($source . "/" . $file, filesize($source . "/" . $file));
             }
             $eqLogic->setUploadStatus($this->getName(), "cleaning");
             if ($this->getConfiguration('remove_old') != "")

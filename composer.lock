@@ -4,8 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f535227341ad938b6437cbedb9cb4978",
+    "content-hash": "e05d3fc8ec6b700a8d4349d7b28e78bb",
     "packages": [
+        {
+            "name": "fensoft/flysystem-webdav",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fensoft/flysystem-webdav.git",
+                "reference": "5e713b1b0cf131b082fa5b1479ecd2b71dbcb57f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fensoft/flysystem-webdav/zipball/5e713b1b0cf131b082fa5b1479ecd2b71dbcb57f",
+                "reference": "5e713b1b0cf131b082fa5b1479ecd2b71dbcb57f",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "~1.0",
+                "php": ">=5.5.0",
+                "sabre/dav": "~3.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\WebDAV\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Flysystem adapter for WebDAV",
+            "support": {
+                "source": "https://github.com/fensoft/flysystem-webdav/tree/master"
+            },
+            "time": "2017-10-10T11:42:03+00:00"
+        },
         {
             "name": "fensoft/rclonewrapper",
             "version": "dev-master",
@@ -33,7 +82,6 @@
                     "Rclonewrapper": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -47,6 +95,9 @@
             "keywords": [
                 "rclone"
             ],
+            "support": {
+                "source": "https://github.com/fensoft/Rclonewrapper/tree/master"
+            },
             "time": "2017-10-04T21:07:00+00:00"
         },
         {
@@ -156,16 +207,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.28",
+            "version": "v0.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/google-api-php-client-services.git",
-                "reference": "209421578d76762806087944cf514f1ede6cf7ad"
+                "reference": "d23e00e38b209d5dc60c1bb71c8f065ee5b6823e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/209421578d76762806087944cf514f1ede6cf7ad",
-                "reference": "209421578d76762806087944cf514f1ede6cf7ad",
+                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/d23e00e38b209d5dc60c1bb71c8f065ee5b6823e",
+                "reference": "d23e00e38b209d5dc60c1bb71c8f065ee5b6823e",
                 "shasum": ""
             },
             "require": {
@@ -189,7 +240,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2017-09-30T00:22:48+00:00"
+            "time": "2017-10-08T00:22:35+00:00"
         },
         {
             "name": "google/auth",
@@ -770,53 +821,6 @@
             "time": "2017-07-11T12:29:45+00:00"
         },
         {
-            "name": "league/flysystem-webdav",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/flysystem-webdav.git",
-                "reference": "5fb6f5a45e5f2a5519a26032d98ad7d7c65f81d7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/5fb6f5a45e5f2a5519a26032d98ad7d7c65f81d7",
-                "reference": "5fb6f5a45e5f2a5519a26032d98ad7d7c65f81d7",
-                "shasum": ""
-            },
-            "require": {
-                "league/flysystem": "~1.0",
-                "php": ">=5.5.0",
-                "sabre/dav": "~3.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Flysystem\\WebDAV\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Frank de Jonge",
-                    "email": "info@frenky.net"
-                }
-            ],
-            "description": "Flysystem adapter for WebDAV",
-            "time": "2016-12-14T11:28:55+00:00"
-        },
-        {
             "name": "monolog/monolog",
             "version": "1.23.0",
             "source": {
@@ -1270,12 +1274,12 @@
             "version": "3.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-dav.git",
+                "url": "https://github.com/sabre-io/dav.git",
                 "reference": "e987775e619728f12205606c9cc3ee565ffb1516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-dav/zipball/e987775e619728f12205606c9cc3ee565ffb1516",
+                "url": "https://api.github.com/repos/sabre-io/dav/zipball/e987775e619728f12205606c9cc3ee565ffb1516",
                 "reference": "e987775e619728f12205606c9cc3ee565ffb1516",
                 "shasum": ""
             },
@@ -1353,12 +1357,12 @@
             "version": "3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-event.git",
+                "url": "https://github.com/sabre-io/event.git",
                 "reference": "831d586f5a442dceacdcf5e9c4c36a4db99a3534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-event/zipball/831d586f5a442dceacdcf5e9c4c36a4db99a3534",
+                "url": "https://api.github.com/repos/sabre-io/event/zipball/831d586f5a442dceacdcf5e9c4c36a4db99a3534",
                 "reference": "831d586f5a442dceacdcf5e9c4c36a4db99a3534",
                 "shasum": ""
             },
@@ -1410,12 +1414,12 @@
             "version": "4.2.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-http.git",
+                "url": "https://github.com/sabre-io/http.git",
                 "reference": "0295f9a3ee39be97e0898592fc19e42421e0cd93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-http/zipball/0295f9a3ee39be97e0898592fc19e42421e0cd93",
+                "url": "https://api.github.com/repos/sabre-io/http/zipball/0295f9a3ee39be97e0898592fc19e42421e0cd93",
                 "reference": "0295f9a3ee39be97e0898592fc19e42421e0cd93",
                 "shasum": ""
             },
@@ -1466,12 +1470,12 @@
             "version": "1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-uri.git",
+                "url": "https://github.com/sabre-io/uri.git",
                 "reference": "ada354d83579565949d80b2e15593c2371225e61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-uri/zipball/ada354d83579565949d80b2e15593c2371225e61",
+                "url": "https://api.github.com/repos/sabre-io/uri/zipball/ada354d83579565949d80b2e15593c2371225e61",
                 "reference": "ada354d83579565949d80b2e15593c2371225e61",
                 "shasum": ""
             },
@@ -1517,12 +1521,12 @@
             "version": "4.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-vobject.git",
+                "url": "https://github.com/sabre-io/vobject.git",
                 "reference": "d0fde2fafa2a3dad1f559c2d1c2591d4fd75ae3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-vobject/zipball/d0fde2fafa2a3dad1f559c2d1c2591d4fd75ae3c",
+                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/d0fde2fafa2a3dad1f559c2d1c2591d4fd75ae3c",
                 "reference": "d0fde2fafa2a3dad1f559c2d1c2591d4fd75ae3c",
                 "shasum": ""
             },
@@ -1614,12 +1618,12 @@
             "version": "1.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fruux/sabre-xml.git",
+                "url": "https://github.com/sabre-io/xml.git",
                 "reference": "59b20e5bbace9912607481634f97d05a776ffca7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-xml/zipball/59b20e5bbace9912607481634f97d05a776ffca7",
+                "url": "https://api.github.com/repos/sabre-io/xml/zipball/59b20e5bbace9912607481634f97d05a776ffca7",
                 "reference": "59b20e5bbace9912607481634f97d05a776ffca7",
                 "shasum": ""
             },
@@ -1724,8 +1728,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "league/flysystem-webdav": 20,
-        "fensoft/rclonewrapper": 20
+        "fensoft/rclonewrapper": 20,
+        "fensoft/flysystem-webdav": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

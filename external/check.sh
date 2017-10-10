@@ -4,7 +4,7 @@ for i in */check.sh; do
   eval $i
   RES=$?
   if [ $RES -ne 0 ]; then
-    echo erreur
+    echo "error: $i not installed"
     exit 1
   fi
 done

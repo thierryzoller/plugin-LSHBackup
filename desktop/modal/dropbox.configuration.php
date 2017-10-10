@@ -19,8 +19,13 @@ if (!isConnect('admin')) {
     throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
-<a href='https://www.dropbox.com/developers/apps'>Dropbox Developers</a>
 
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Installation Dropbox}}</label>
+    <div class="col-sm-4">
+        <a class="btn btn-primary btn-xs" href='https://www.dropbox.com/developers/apps' target="_blank">{{Lien}}</a>
+    </div>
+</div>
 <div class="form-group">
     <label class="col-sm-3 control-label">{{App key}}</label>
     <div class="col-sm-4">

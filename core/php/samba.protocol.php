@@ -36,6 +36,7 @@ class samba extends Fly {
 	$this->password = $_password;
     $this->share = $_share;
 	$this->forceBase = false;
+    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {
