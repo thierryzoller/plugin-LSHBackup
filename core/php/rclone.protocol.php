@@ -39,8 +39,8 @@ class rclone extends DataTransfert {
     $rclone_config = tempnam(sys_get_temp_dir(),'rclone');
     file_put_contents($rclone_config, $this->config);
     $rclone = new Rclonewrapper($rclone_path, $rclone_config);
-    \log::add('datatransfert', 'debug', "rclone version " . $rclone->version());
-    \log::add('datatransfert', 'debug', "remotes " . json_encode($rclone->listremotes()));
+    $this->log('debug', "rclone version " . $rclone->version());
+    $this->log('debug', "remotes " . json_encode($rclone->listremotes()));
     $rclone->setremote($rclone->listremotes()[0]);
     return $rclone;
   }

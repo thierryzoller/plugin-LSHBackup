@@ -86,10 +86,10 @@ foreach (object::all() as $object) {
                 <div class="col-sm-4">
                     <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
 					    <option disabled selected value>-- {{Choisir un type}} --</option>
-                        <?php
-foreach (datatransfert::supportedProtocol() as $protocol) {
-	echo '<option value="' . $protocol . '">' . $protocol . '</option>';
-}
+<?php
+  foreach (datatransfert::supportedProtocol() as $protocol) {
+    echo '<option value="' . $protocol . '">' . $protocol . '</option>';
+  }
 ?>
                    </select>
                </div>
@@ -100,13 +100,13 @@ foreach (datatransfert::supportedProtocol() as $protocol) {
 <div class="col-sm-6">
     <form class="form-horizontal">
         <fieldset>
-            <legend><i class="fa fa-wrench"></i>  {{Paramètres}}</legend>
+            <legend><i class="fa fa-wrench"></i> {{Paramètres}}</legend>
             <div id="div_protocolParameters"></div>
         </fieldset>
     </form>
 </div>
 </div>
-<legend><i class="fa fa-list-alt"></i>  {{Data transfert}}</legend>
+<legend><i class="fa fa-list-alt"></i> {{Data transfert}}</legend>
 
 
 <a class="btn btn-success btn-sm cmdAction" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une commande Data transfert}}</a><br/><br/>

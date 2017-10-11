@@ -103,8 +103,12 @@ class datatransfert extends eqLogic {
         $logic = cmd::byEqLogicIdAndLogicalId($this->getId(), $name . "_progress");
         if ($logic)
             $logic->event($progress);
-        \log::add('datatransfert', 'debug', "progress " . $name . ": " . $progress);
+        $this->protocol->log('debug', "progress " . $name . ": " . $progress);
     }
+
+    function setProtocol($protocol) {
+      $this->protocol = $protocol;
+  }
 }
 
 class datatransfertCmd extends cmd {
@@ -170,11 +174,13 @@ class datatransfertCmd extends cmd {
     public function execute($_options = null) {
         try {
             $eqLogic = $this->getEqLogic();
-            $eqLogic->setUploadStatus($this->getName(), "uploading");
-            $eqLogic->setUploadProgress($this->getName(), 0);
             $protocol = $eqLogic->getConfiguration('protocol');
             include_file('core', $protocol . '.protocol', 'php', 'datatransfert');
             $class = call_user_func('DataTransfert\\' . $protocol . '::withEqLogic', $eqLogic);
+            $class->setParentCmd($this);
+            $eqLogic->setProtocol($class);
+            $eqLogic->setUploadStatus($this->getName(), "uploading");
+            $eqLogic->setUploadProgress($this->getName(), 0);
             $class->setProgressCallback($this);
             $cible = $this->getConfiguration('cible');
             $source = "/" . trim(calculPath($this->getConfiguration('source')), " /");
@@ -202,11 +208,11 @@ class datatransfertCmd extends cmd {
             }
             $this->setProgressTotal($total);
             foreach ($res as $file) {
-                \log::add('datatransfert', 'info', "uploading " . $source . "/" . $file . " to " . $cible . "/" . $file);
+                $class->log('info', "uploading " . $source . "/" . $file . " to " . $cible . "/" . $file);
                 if (dirname($file) != "" && dirname($file) != null)
                     $class->mkdir(dirname($cible . "/" . $file));
                 $class->put($source . "/" . $file, $cible . "/" . $file);
-                \log::add('datatransfert', 'info', "upload " . $source . "/" . $file . " to " . $cible . "/" . $file . " complete !");
+                $class->log('info', "upload " . $source . "/" . $file . " to " . $cible . "/" . $file . " complete !");
                 $this->setProgress($source . "/" . $file, filesize($source . "/" . $file));
             }
             $eqLogic->setUploadStatus($this->getName(), "cleaning");

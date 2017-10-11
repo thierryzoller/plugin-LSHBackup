@@ -24,10 +24,14 @@ require_once dirname(__FILE__) . '/../../vendor/autoload.php';
 
 function timesort($a, $b)
 {
-    return strcmp($a["time"], $b["time"]);
+  return strcmp($a["time"], $b["time"]);
 }
 
 class DataTransfert {
+  function log($type, $message) {
+    \log::add($this->logName, $type, $message);
+  }
+
   function setProgressCallback($class) {
     $this->progressCallback = $class;
   }
@@ -50,25 +54,32 @@ class DataTransfert {
     \log::add('datatransfert', 'error', "withEqLogic unimplemented");
   }
 
+  function setParentCmd($cmd) {
+    if ($cmd->getEqLogic()->getConfiguration('splitLogs') == 1)
+      $this->logName = 'datatransfert_' . $cmd->getEqLogic()->getName() . "_" . $cmd->getName();
+    else
+      $this->logName = 'datatransfert';
+  }
+
   function put($_source, $_cible) {
-    \log::add('datatransfert', 'error', "put unimplemented");
+    $this->log('error', "put unimplemented");
   }
   
   function ls($_cible) {
-    \log::add('datatransfert', 'error', "list unimplemented");
+    $this->log('error', "list unimplemented");
     return array();
   }
   
   function remove($_cible) {
-    \log::add('datatransfert', 'error', "remove unimplemented");
+    $this->log('error', "remove unimplemented");
   }
   
   function mkdir($_cible) {
-    \log::add('datatransfert', 'error', "mkdir unimplemented");
+    $this->log('error', "mkdir unimplemented");
   }
   
   function removeOlder($_cible, $numberToKeep) {
-    \log::add('datatransfert', 'info', "removing old files except " . $numberToKeep . " in " . $_cible);
+    $this->log('info', "removing old files except " . $numberToKeep . " in " . $_cible);
     $ls = $this->ls($_cible);
     $ls2 = array();
     $lsskipped = array();
@@ -82,11 +93,11 @@ class DataTransfert {
         array_push($ls2, $val);
     }
     if (count($lsskipped) != 0)
-      \log::add('datatransfert', 'info', "unknown time, clean skipped for " . implode(',', $lsskipped));
+      $this->log('info', "unknown time, clean skipped for " . implode(',', $lsskipped));
     usort($ls2, "\\DataTransfert\\timesort");
     $todel = array_slice($ls2, 0, -$numberToKeep);
     foreach ($todel as $val) {
-      \log::add('datatransfert', 'info', "removing " . $_cible);
+      $this->log('info', "removing " . $_cible);
       $this->remove($_cible . "/" . $val["name"]);
     }
   }
@@ -204,22 +215,22 @@ class Fly extends DataTransfert {
     $res = array();
     foreach ($filesystem->listContents($this->basename($_source), false) as $val) {
       if ($val["type"] == "file") {
-        \log::add('datatransfert', 'debug', "list " . json_encode($val));
+        $this->log('debug', "list " . json_encode($val));
         array_push($res, array("name" => $val["basename"], "alias" => $val["filename"] . ($val["extension"]==""?"":".".$val["extension"]), "time" => $this->timestamp($val)));
       }
     }
-    \log::add('datatransfert', 'debug', "list " . json_encode($res));
+    $this->log('debug', "list " . json_encode($res));
     return $res;
   }
   
   function remove($_cible) {
-    \log::add('datatransfert', 'debug', "remove " . $_cible);
+    $this->log('debug', "remove " . $_cible);
     $filesystem = $this->getFly($this->dirname($_cible));
     $filesystem->delete($this->basename($_cible));
   }
   
   function mkdir($_cible) {
-    \log::add('datatransfert', 'debug', "mkdir " . $_cible);
+    $this->log('debug', "mkdir " . $_cible);
     $filesystem = $this->getFly("");
     $filesystem->createDir($_cible);
   }

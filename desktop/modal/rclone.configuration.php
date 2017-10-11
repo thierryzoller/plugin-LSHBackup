@@ -38,3 +38,9 @@ if (!isConnect('admin')) {
         <textarea rows="10" style="width: 300px;" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="rclone"/>
     </div>
 </div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Scinder les logs}}</label>
+    <div class="col-sm-4">
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="splitLogs"/>{{Scinder les logs}}</label>
+    </div>
+</div>

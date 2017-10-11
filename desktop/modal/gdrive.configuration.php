@@ -50,3 +50,9 @@ if (!isConnect('admin')) {
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="remove_dupes" checked/>{{Supprimer fichiers duppliqués}}</label>
     </div>
 </div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Scinder les logs}}</label>
+    <div class="col-sm-4">
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="splitLogs"/>{{Scinder les logs}}</label>
+    </div>
+</div>
