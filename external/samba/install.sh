@@ -1,1 +1,1 @@
-sudo apt-get install smbclient
+sudo apt-get -y install smbclient
