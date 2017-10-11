@@ -40,7 +40,10 @@ class samba extends Fly {
   }
 
   static function withEqLogic($_eqLogic) {
-    return new self($_eqLogic->getConfiguration('host'), $_eqLogic->getConfiguration('username'), $_eqLogic->getConfiguration('password'), $_eqLogic->getConfiguration('share'));
+    return new self($_eqLogic->getConfiguration('host'),
+                    $_eqLogic->getConfiguration('username'),
+                    $_eqLogic->getConfiguration('password'),
+                    $_eqLogic->getConfiguration('share'));
   }
   
   function getFly($_base) {

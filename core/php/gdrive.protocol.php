@@ -23,17 +23,21 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
 class gdrive extends Fly {
-  function __construct($_clientId, $_clientSecret, $_accessToken) {
+  function __construct($_clientId, $_clientSecret, $_accessToken, $_truePath) {
     $this->clientId = $_clientId;
 	$this->clientSecret = $_clientSecret;
 	$this->accessToken = $_accessToken;
+    $this->truePath = $_truePath;
 	$this->forceBase = false;
 	$this->removeDupes = true;
     $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {
-    return new self($_eqLogic->getConfiguration('clientId'), $_eqLogic->getConfiguration('clientSecret'), $_eqLogic->getConfiguration('accessToken'));
+    return new self($_eqLogic->getConfiguration('clientId'),
+                    $_eqLogic->getConfiguration('clientSecret'),
+                    $_eqLogic->getConfiguration('accessToken'),
+                    ($_eqLogic->getConfiguration('truePath') == 1) ? true : false);
   }
   
   function getFly($_base) {
@@ -49,9 +53,35 @@ class gdrive extends Fly {
   }
   
   function put($_source, $_cible) {
-    parent::put($_source, explode("/", $_cible)[0] . "/" . implode("_", array_slice(explode("/", $_cible), 1)));
+    if ($this->truePath) {
+      $id = $this->mkdir(dirname($_cible));
+      parent::put($_source, $id . "/" . basename($_cible));
+    } else {
+      parent::put($_source, explode("/", $_cible)[0] . "/" . implode("_", array_slice(explode("/", $_cible), 1)));
+    }
   }
-  
+
   function mkdir($_cible) {
+    if (!$this->truePath)
+      return;
+    $id = 'root';
+    while ($_cible != "") {
+      $fly = self::getFly($id);
+      $base = explode("/", $_cible)[0];
+      $id = null;
+      foreach ($fly->listContents() as $val) {
+        if ($val["type"] == "dir" && $val["filename"] == $base)
+          $id = $val["path"];
+      }
+      if ($id == null) {
+        $fly->createDir($base);
+        foreach ($fly->listContents() as $val) {
+          if ($val["type"] == "dir" && $val["filename"] == $base)
+            $id = $val["path"];
+        }
+      }
+      $_cible = implode("/", array_slice(explode("/", $_cible), 1));
+    }
+    return $id;
   }
 }
