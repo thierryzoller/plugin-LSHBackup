@@ -60,6 +60,8 @@ class DataTransfert {
     else
       $this->logName = 'datatransfert';
     $this->preciseProgress = $cmd->getEqLogic()->getConfiguration('preciseProgress') == 1 ? true : false;
+    if (isset($this->preciseProgressForce))
+      $this->preciseProgress = $this->preciseProgressForce;
   }
 
   function put($_source, $_cible) {

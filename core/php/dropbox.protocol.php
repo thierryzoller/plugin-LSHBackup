@@ -33,6 +33,7 @@ class dropbox extends Fly {
 	$this->clientSecret = $_clientSecret;
 	$this->accessToken = $_accessToken;
 	$this->forceBase = false;
+    $this->preciseProgressForce = false;
   }
 
   static function withEqLogic($_eqLogic) {
