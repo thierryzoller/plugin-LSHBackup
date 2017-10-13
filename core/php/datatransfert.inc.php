@@ -80,7 +80,7 @@ class DataTransfert {
   }
   
   function removeOlder($_cible, $numberToKeep) {
-    $this->log('info', "removing old files except " . $numberToKeep . " in " . $_cible);
+    $this->log('info', "cleaning and keeping " . $numberToKeep . " most recent files in [" . $_cible . "]");
     $ls = $this->ls($_cible);
     $ls2 = array();
     $lsskipped = array();
@@ -216,11 +216,11 @@ class Fly extends DataTransfert {
     $res = array();
     foreach ($filesystem->listContents($this->basename($_source), false) as $val) {
       if ($val["type"] == "file") {
-        $this->log('debug', "list " . json_encode($val));
-        array_push($res, array("name" => $val["basename"], "alias" => $val["filename"] . ($val["extension"]==""?"":".".$val["extension"]), "time" => $this->timestamp($val)));
+        //$this->log('debug', "list " . json_encode($val));
+        array_push($res, array("name" => $val["basename"], "alias" => $val["filename"] . ((!isset($val["extension"]) || $val["extension"]=="")?"":".".$val["extension"]), "time" => $this->timestamp($val)));
       }
     }
-    $this->log('debug', "list " . json_encode($res));
+    //$this->log('debug', "list " . json_encode($res));
     return $res;
   }
   

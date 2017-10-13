@@ -182,7 +182,7 @@ class datatransfertCmd extends cmd {
             $eqLogic->setUploadStatus($this->getName(), "uploading");
             $eqLogic->setUploadProgress($this->getName(), 0);
             $class->setProgressCallback($this);
-            $cible = $this->getConfiguration('cible');
+            $cible = "/" . trim($this->getConfiguration('cible'), " /");
             $source = "/" . trim(calculPath($this->getConfiguration('source')), " /");
             if (!is_dir($source))
                 throw new \Exception(__('Dossier source manquant : ',__FILE__) . $source);
@@ -208,16 +208,22 @@ class datatransfertCmd extends cmd {
             }
             $this->setProgressTotal($total);
             foreach ($res as $file) {
-                $class->log('info', "uploading " . $source . "/" . $file . " to " . $cible . "/" . $file);
+                $cibleF = ($cible == "/") ? ("/" . $file) : ($cible . "/" . $file);
+                $class->log('info', "uploading " . $source . "/" . $file . " to " . $cibleF);
                 if (dirname($file) != "" && dirname($file) != null)
-                    $class->mkdir(dirname($cible . "/" . $file));
-                $class->put($source . "/" . $file, $cible . "/" . $file);
-                $class->log('info', "upload " . $source . "/" . $file . " to " . $cible . "/" . $file . " complete !");
+                    $class->mkdir(dirname($cibleF));
+                $class->put($source . "/" . $file, $cibleF);
+                $class->log('info', "upload " . $source . "/" . $file . " to " . $cibleF . " complete !");
                 $this->setProgress($source . "/" . $file, filesize($source . "/" . $file));
             }
             $eqLogic->setUploadStatus($this->getName(), "cleaning");
             if ($this->getConfiguration('remove_old') != "")
                 $class->removeOlder($cible, $this->getConfiguration('remove_old'));
+            $list = $class->ls($cible);
+            $res = array();
+            foreach ($list as $val)
+                array_push($res, $val["alias"]);
+            $class->log('info', "files on [" . $cible . "]: " . implode(",", $res));
             $eqLogic->setUploadStatus($this->getName(), "ok");
         } catch (Exception $e) {
             $eqLogic->setUploadStatus($this->getName(), "ko");
