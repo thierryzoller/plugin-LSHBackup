@@ -37,7 +37,9 @@ class dropbox extends Fly {
   }
 
   static function withEqLogic($_eqLogic) {
-    return new self($_eqLogic->getConfiguration('clientId'), $_eqLogic->getConfiguration('clientSecret'), $_eqLogic->getConfiguration('accessToken'));
+    return new self($_eqLogic->getConfiguration('clientId'),
+                    $_eqLogic->getConfiguration('clientSecret'),
+                    $_eqLogic->getConfiguration('accessToken'));
   }
   
   function getFly($_base) {

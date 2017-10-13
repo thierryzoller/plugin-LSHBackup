@@ -182,7 +182,7 @@ class datatransfertCmd extends cmd {
             $eqLogic->setUploadStatus($this->getName(), "uploading");
             $eqLogic->setUploadProgress($this->getName(), 0);
             $class->setProgressCallback($this);
-            $cible = "/" . trim($this->getConfiguration('cible'), " /");
+            $cible = ltrim(rtrim($this->getConfiguration('cible'), " /"), " ");
             $source = "/" . trim(calculPath($this->getConfiguration('source')), " /");
             if (!is_dir($source))
                 throw new \Exception(__('Dossier source manquant : ',__FILE__) . $source);

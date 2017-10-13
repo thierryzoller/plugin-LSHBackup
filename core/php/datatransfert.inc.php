@@ -55,10 +55,9 @@ class DataTransfert {
   }
 
   function setParentCmd($cmd) {
+    $this->logName = 'datatransfert';
     if ($cmd->getEqLogic()->getConfiguration('splitLogs') == 1)
       $this->logName = 'datatransfert_' . $cmd->getEqLogic()->getName() . "_" . $cmd->getName();
-    else
-      $this->logName = 'datatransfert';
     $this->preciseProgress = $cmd->getEqLogic()->getConfiguration('preciseProgress') == 1 ? true : false;
     if (isset($this->preciseProgressForce))
       $this->preciseProgress = $this->preciseProgressForce;

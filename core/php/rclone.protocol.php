@@ -39,13 +39,16 @@ class rclone extends DataTransfert {
     $rclone_config = tempnam(sys_get_temp_dir(),'rclone');
     file_put_contents($rclone_config, $this->config);
     $rclone = new Rclonewrapper($rclone_path, $rclone_config);
-    $this->log('debug', "rclone version " . $rclone->version());
-    $this->log('debug', "remotes " . json_encode($rclone->listremotes()));
     $rclone->setremote($rclone->listremotes()[0]);
     return $rclone;
   }
   
   function put($_source, $_cible) {
+    if (isset($this->header)) {
+      $this->header = true;
+      $this->log('debug', "rclone version " . $rclone->version());
+      $this->log('debug', "remotes " . json_encode($rclone->listremotes()));
+    }
     $this->rclone->copy($_source, dirname($_cible));
   }
   
@@ -53,17 +56,21 @@ class rclone extends DataTransfert {
     $res = array();
     foreach ($this->rclone->lsl($_source) as $val1) {
       foreach ($val1 as $val) {
-        array_push($res, array("name" => $val["name"], "time" => strtotime(explode(".", $val["time"])[0])));
+        if (is_array($val) && isset($val[0]) && is_array($val[0]))
+          continue;
+        //$this->log('debug', "list val " . json_encode($val));
+        array_push($res, array("name" => $val["name"], "alias" => $val["name"], "time" => strtotime(explode(".", $val["time"])[0])));
       }
     }
     return $res;
   }
   
-  function remove($_source) {
-    $this->rclone->delete($_source);
+  function remove($_cible) {
+    $this->rclone->delete($_cible);
   }
   
-  function mkdir($_source) {
-    $this->rclone->mkdir($_source);
+  function mkdir($_cible) {
+    $this->log('debug', "mkdir " . $_cible);
+    $this->rclone->mkdir($_cible);
   }
 }
