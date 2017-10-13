@@ -45,15 +45,21 @@ if (!isConnect('admin')) {
     </div>
 </div>
 <div class="form-group">
-    <label class="col-sm-3 control-label">{{Supprimer fichiers duppliqués}}</label>
+    <label class="col-sm-3 control-label">{{Supprimer fichiers dupliqués}}</label>
     <div class="col-sm-4">
-        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="remove_dupes" checked/>{{Supprimer fichiers duppliqués}}</label>
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="remove_dupes" checked/>{{Supprimer fichiers dupliqués}}</label>
     </div>
 </div>
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Type de cible}}</label>
     <div class="col-sm-4">
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="truePath" checked/>{{Oui: chemin}}<br/>{{Non: folderid}}</label>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Progression précise}}</label>
+    <div class="col-sm-4">
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="preciseProgress"/>{{Progression précise}}</label>
     </div>
 </div>
 <div class="form-group">

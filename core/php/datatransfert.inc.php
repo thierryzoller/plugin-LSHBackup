@@ -59,6 +59,7 @@ class DataTransfert {
       $this->logName = 'datatransfert_' . $cmd->getEqLogic()->getName() . "_" . $cmd->getName();
     else
       $this->logName = 'datatransfert';
+    $this->preciseProgress = $cmd->getEqLogic()->getConfiguration('preciseProgress') == 1 ? true : false;
   }
 
   function put($_source, $_cible) {

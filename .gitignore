@@ -8,3 +8,4 @@ composer.phar
 vendor
 external/rclone/rclone
 external/rclone_windows/jeedom-rclone-configurator.zip
+external/rclone_mac/jeedom-rclone-configurator.zip

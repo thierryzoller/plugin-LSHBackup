@@ -30,7 +30,6 @@ class gdrive extends Fly {
     $this->truePath = $_truePath;
 	$this->forceBase = false;
 	$this->removeDupes = true;
-    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {

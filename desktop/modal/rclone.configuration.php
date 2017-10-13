@@ -33,6 +33,12 @@ if (!isConnect('admin')) {
     </div>
 </div>
 <div class="form-group">
+    <label class="col-sm-3 control-label">{{Configurateur automatique Mac}}</label>
+    <div class="col-sm-4">
+        <a class="btn btn-primary btn-xs" href='plugins/datatransfert/external/rclone_mac/jeedom-rclone-configurator.zip' target="_blank">{{Lien}}</a>
+    </div>
+</div>
+<div class="form-group">
     <label class="col-sm-3 control-label">{{Configuration RClone}}</label>
     <div class="col-sm-4">
         <textarea rows="10" style="width: 300px;" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="rclone"/>

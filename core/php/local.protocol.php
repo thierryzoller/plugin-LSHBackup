@@ -24,7 +24,6 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class local extends DataTransfert {
   function __construct() {
     $this->forceBase = false;
-    $this->preciseProgress = true;
   }
 
   static function withEqLogic($_eqLogic) {
