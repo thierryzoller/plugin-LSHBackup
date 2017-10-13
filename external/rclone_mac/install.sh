@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt-get update
 sudo apt-get -y install zip wget
 cd `dirname $0`
 VERSION=v1.38
