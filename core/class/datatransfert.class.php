@@ -227,6 +227,7 @@ class datatransfertCmd extends cmd {
             $eqLogic->setUploadStatus($this->getName(), "ok");
         } catch (Exception $e) {
             $eqLogic->setUploadStatus($this->getName(), "ko");
+            $class->log('error', $e->getTraceAsString());
             throw $e;
         }
     }

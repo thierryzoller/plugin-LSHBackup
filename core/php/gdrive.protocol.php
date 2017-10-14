@@ -61,6 +61,8 @@ class gdrive extends Fly {
   }
 
   function mkdir($_cible) {
+    $this->log('debug', "mkdir " . $_cible);
+    $_cible = trim($_cible, "/ ");
     if (!$this->truePath)
       return;
     $id = 'root';
@@ -73,6 +75,7 @@ class gdrive extends Fly {
           $id = $val["path"];
       }
       if ($id == null) {
+        $this->log('debug', "mkdir base " . $base);
         $fly->createDir($base);
         foreach ($fly->listContents() as $val) {
           if ($val["type"] == "dir" && $val["filename"] == $base)
@@ -82,5 +85,11 @@ class gdrive extends Fly {
       $_cible = implode("/", array_slice(explode("/", $_cible), 1));
     }
     return $id;
+  }
+  
+  function ls($_source) {
+    if ($_source[0] == '/')
+      $_source = $this->mkdir($_source);
+    return parent::ls($_source);
   }
 }

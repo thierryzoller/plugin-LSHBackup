@@ -213,6 +213,7 @@ class Fly extends DataTransfert {
   }
   
   function ls($_source) {
+    $this->log('debug', "ls " . $_source);
     $filesystem = $this->getFly($this->dirname($_source));
     $res = array();
     foreach ($filesystem->listContents($this->basename($_source), false) as $val) {
