@@ -23,11 +23,12 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
 class gdrive extends Fly {
-  function __construct($_clientId, $_clientSecret, $_accessToken, $_truePath) {
+  function __construct($_clientId, $_clientSecret, $_accessToken, $_truePath, $_prefixPath) {
     $this->clientId = $_clientId;
 	$this->clientSecret = $_clientSecret;
 	$this->accessToken = $_accessToken;
     $this->truePath = $_truePath;
+    $this->prefixPath = $_prefixPath;
 	$this->forceBase = false;
 	$this->removeDupes = true;
   }
@@ -36,7 +37,8 @@ class gdrive extends Fly {
     return new self($_eqLogic->getConfiguration('clientId'),
                     $_eqLogic->getConfiguration('clientSecret'),
                     $_eqLogic->getConfiguration('accessToken'),
-                    ($_eqLogic->getConfiguration('truePath') == 1) ? true : false);
+                    ($_eqLogic->getConfiguration('truePath') == 1) ? true : false,
+                    ($_eqLogic->getConfiguration('prefixPath') == 1) ? true : false);
   }
   
   function getFly($_base) {
@@ -56,7 +58,11 @@ class gdrive extends Fly {
       $id = $this->mkdir(dirname($_cible));
       parent::put($_source, $id . "/" . basename($_cible));
     } else {
-      parent::put($_source, explode("/", $_cible)[0] . "/" . implode("_", array_slice(explode("/", $_cible), 1)));
+      if ($this->prefixPath)
+        $basename = implode("_", array_slice(explode("/", $_cible), 1));
+      else
+        $basename = basename($_cible);
+      parent::put($_source, explode("/", $_cible)[0] . "/" . $basename);
     }
   }
 

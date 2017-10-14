@@ -57,6 +57,12 @@ if (!isConnect('admin')) {
     </div>
 </div>
 <div class="form-group">
+    <label class="col-sm-3 control-label">{{Préfixer par le path dans le nom}}</label>
+    <div class="col-sm-4">
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="prefixPath"/>{{Oui: path_nom.txt}}<br/>{{Non: nom.txt}}</label>
+    </div>
+</div>
+<div class="form-group">
     <label class="col-sm-3 control-label">{{Progression précise}}</label>
     <div class="col-sm-4">
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="preciseProgress"/>{{Progression précise}}</label>
