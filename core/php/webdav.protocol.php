@@ -69,7 +69,7 @@ class webdav extends Fly {
 		$res = array();
 		
 		$settings = array(
-			'baseUri' => "https://ncloud.zaclys.com/",
+			'baseUri' => $baseUri,
 			'userName' => $this->username,
 			'password' => $this->password
 		);
