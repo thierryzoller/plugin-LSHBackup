@@ -25,18 +25,22 @@ require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 use Rclonewrapper\Rclonewrapper;
 
 class rclone extends DataTransfert {
-  function __construct($_config) {
+  function __construct($_config, $_speed) {
     $this->config = $_config;
+    $this->speed = $_speed;
 	$this->rclone = $this->getRclone();
   }
 
   static function withEqLogic($_eqLogic) {
-    return new self($_eqLogic->getConfiguration('rclone'));
+    return new self($_eqLogic->getConfiguration('rclone'),
+                    $_eqLogic->getConfiguration('speed'));
   }
   
   function getRclone() {
     $rclone_path = dirname(__FILE__) . '/../../external/rclone/rclone';
     $rclone_config = tempnam(sys_get_temp_dir(),'rclone');
+    if ($this->speed != "")
+      $rclone_path = $rclone_path . " --bwlimit " . $this->speed . "k ";
     file_put_contents($rclone_config, $this->config);
     $rclone = new Rclonewrapper($rclone_path, $rclone_config);
     $rclone->setremote($rclone->listremotes()[0]);

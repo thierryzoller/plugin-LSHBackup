@@ -25,6 +25,7 @@ class datatransfert extends eqLogic {
         $return['log'] = __CLASS__ . '_update';
         $return['progress_file'] = jeedom::getTmpFolder(__CLASS__) . '_progress';
         $state = '';
+        chmod(dirname(__FILE__) . "/../../external/check.sh", 0775);
         exec(dirname(__FILE__) . "/../../external/check.sh", $out, $ret);
         if ($ret == 0) {
             $state = 'ok';
