@@ -69,6 +69,12 @@ if (!isConnect('admin')) {
     </div>
 </div>
 <div class="form-group">
+    <label class="col-sm-3 control-label">{{Vitesse limite (ko/s)}}</label>
+    <div class="col-sm-4">
+        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="speed" value="" />
+    </div>
+</div>
+<div class="form-group">
     <label class="col-sm-3 control-label">{{Scinder les logs}}</label>
     <div class="col-sm-4">
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="splitLogs"/>{{Scinder les logs}}</label>

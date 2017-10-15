@@ -61,6 +61,7 @@ class DataTransfert {
     $this->preciseProgress = $cmd->getEqLogic()->getConfiguration('preciseProgress') == 1 ? true : false;
     if (isset($this->preciseProgressForce))
       $this->preciseProgress = $this->preciseProgressForce;
+    $this->speed = $cmd->getEqLogic()->getConfiguration('speed');
   }
 
   function put($_source, $_cible) {
@@ -119,10 +120,24 @@ class ProgressWrapper {
     $this->fp = self::$registered[$url['host']]["content"];
     $this->id = self::$registered[$url['host']]["id"];
     $this->callback = self::$registered[$url['host']]["callback"];
+    $this->options = self::$registered[$url['host']]["options"];
+    $this->initialDate = \microtime(true);
     return true;
   }
   function stream_read($count) {
     //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_read " . $count);
+    if (isset($this->options["speed"]) && $this->options["speed"] != "") {
+      $this->totalCount += $count;
+      $time = (\microtime(true) - $this->initialDate);
+      $speed = $this->options["speed"] * 1000;
+      $size = $this->totalCount;
+      $wait = $size / $speed - $time;
+      if ($wait > 0.01) {
+        \usleep($wait * 1000000);
+        //\log::add('datatransfert', 'debug', "throttle " . $wait . " time=" . $time . " speed=" . $speed . " size=" . $size);
+      }
+    }
+
     $res = fread($this->fp, $count);
     $this->callback->setProgress($this->id, ftell($this->fp));
     //\log::add('datatransfert', 'debug', "ProgressWrapper::stream_read=" . strlen($res));
@@ -162,11 +177,11 @@ class ProgressWrapper {
     //\log::add('datatransfert', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
     return $res;
   }
-  static function wrap($what, $id, $callback) {
+  static function wrap($what, $id, $callback, $options = array()) {
     if (!in_array("datatransfert", stream_get_wrappers()))
       stream_wrapper_register("datatransfert", __class__);
     self::$counter = self::$counter + 1;
-    self::$registered[self::$counter] = array("content" => $what, "id" => $id, "callback" => $callback);
+    self::$registered[self::$counter] = array("content" => $what, "id" => $id, "callback" => $callback, "options" => $options);
     return fopen("datatransfert://" . self::$counter, "r+");
   }
   
@@ -201,8 +216,8 @@ class Fly extends DataTransfert {
       }
     }
     $filesystem = $this->getFly($this->dirname($_cible));
-    if ($this->preciseProgress)
-      $fp = ProgressWrapper::wrap(fopen($_source, 'r'), $_source, $this);
+    if ($this->preciseProgress || (isset($this->speed) && $this->speed != ""))
+      $fp = ProgressWrapper::wrap(fopen($_source, 'r'), $_source, $this, array("speed" => $this->speed));
     else
       $fp = fopen($_source, 'r');
     $filesystem->putStream($this->basename($_cible), $fp);
@@ -233,6 +248,8 @@ class Fly extends DataTransfert {
   }
   
   function mkdir($_cible) {
+    if ($_cible == "/")
+      return;
     $this->log('debug', "mkdir " . $_cible);
     $filesystem = $this->getFly("");
     $filesystem->createDir($_cible);
