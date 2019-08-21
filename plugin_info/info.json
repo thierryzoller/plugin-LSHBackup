@@ -1,5 +1,5 @@
 {
-	"id" : "datatransfert",
+	"id" : "LSHBackup",
 	"name" : "Data Transfert",
 	"description" : "Plugin pour transferer de fichiers",
 	"licence" : "AGPL",
