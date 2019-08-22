@@ -1,6 +1,6 @@
 {
 	"id" : "LSHBackup",
-	"name" : "LSHBackup",
+	"name" : "LSHBackup GUI",
 	"description" : "Plugin pour transferer de fichiers",
 	"licence" : "AGPL",
 	"author" : "fensoft",

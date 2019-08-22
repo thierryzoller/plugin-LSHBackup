@@ -130,8 +130,8 @@ foreach (object::all() as $object) {
     </fieldset>
 </form>
 
-</div>
+</div>d
 </div>
 
-<?php include_file('desktop', 'datatransfert', 'js', 'datatransfert');?>
+<?php include_file('desktop', 'datatransfert', 'js', 'LSHBackup');?>
 <?php include_file('core', 'plugin.template', 'js');?>
