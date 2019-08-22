@@ -176,7 +176,7 @@ class LSHBackupCmd extends cmd {
         try {
             $eqLogic = $this->getEqLogic();
             $protocol = $eqLogic->getConfiguration('protocol');
-            include_file('core', $protocol . '.protocol', 'php', 'datatransfert');
+            include_file('core', $protocol . '.protocol', 'php', 'LSHBackup');
             $class = call_user_func('DataTransfert\\' . $protocol . '::withEqLogic', $eqLogic);
             $class->setParentCmd($this);
             $eqLogic->setProtocol($class);
@@ -197,7 +197,7 @@ class LSHBackupCmd extends cmd {
                         'datetime' => filemtime($source . '/' . $file)
                     );
                 }
-                usort($filelist, 'datatransfertCmd::orderFile');
+                usort($filelist, 'LSHBackupCmd::orderFile');
                 foreach (array_slice($filelist, 0, $this->getConfiguration('filter_recentfile')) as $file)
                     array_push($res, $file['file']);
             } else {

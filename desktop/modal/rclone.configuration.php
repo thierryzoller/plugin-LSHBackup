@@ -29,13 +29,13 @@ if (!isConnect('admin')) {
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Configurateur automatique Windows}}</label>
     <div class="col-sm-4">
-        <a class="btn btn-primary btn-xs" href='plugins/datatransfert/external/rclone_windows/jeedom-rclone-configurator.zip' target="_blank">{{Lien}}</a>
+        <a class="btn btn-primary btn-xs" href='plugins/LSHBackup/external/rclone_windows/jeedom-rclone-configurator.zip' target="_blank">{{Lien}}</a>
     </div>
 </div>
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Configurateur automatique Mac}}</label>
     <div class="col-sm-4">
-        <a class="btn btn-primary btn-xs" href='plugins/datatransfert/external/rclone_mac/jeedom-rclone-configurator.zip' target="_blank">{{Lien}}</a>
+        <a class="btn btn-primary btn-xs" href='plugins/LSHBackup/external/rclone_mac/jeedom-rclone-configurator.zip' target="_blank">{{Lien}}</a>
     </div>
 </div>
 <div class="form-group">

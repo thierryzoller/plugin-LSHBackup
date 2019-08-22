@@ -19,7 +19,7 @@
 namespace DataTransfert;
 
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-include_file('core', 'datatransfert', 'class', 'datatransfert');
+include_file('core', 'LSHBackup', 'class', 'LSHBackup');
 require_once dirname(__FILE__) . '/../../vendor/autoload.php';
 
 function timesort($a, $b)
@@ -178,11 +178,11 @@ class ProgressWrapper {
     return $res;
   }
   static function wrap($what, $id, $callback, $options = array()) {
-    if (!in_array("datatransfert", stream_get_wrappers()))
-      stream_wrapper_register("datatransfert", __class__);
+    if (!in_array("LSHBackup", stream_get_wrappers()))
+      stream_wrapper_register("LSHBackup", __class__);
     self::$counter = self::$counter + 1;
     self::$registered[self::$counter] = array("content" => $what, "id" => $id, "callback" => $callback, "options" => $options);
-    return fopen("datatransfert://" . self::$counter, "r+");
+    return fopen("LSHBackup://" . self::$counter, "r+");
   }
   
   static function pipe_streams($in, $out)
