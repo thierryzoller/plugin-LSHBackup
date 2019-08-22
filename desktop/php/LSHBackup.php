@@ -2,9 +2,9 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
+$plugin = plugin::byId('LSHBackup');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
-#$eqLogics = eqLogic::byType('LSHBackup');
 ?>
 
 <script type="text/javascript">
@@ -135,4 +135,4 @@ foreach (object::all() as $object) {
 </div>
 
 <?php include_file('desktop', 'LSHBackup', 'js', 'LSHBackup');?>
-<?php #include_file('core', 'plugin.template', 'js');?>
+<?php include_file('core', 'plugin.template', 'js');?>
