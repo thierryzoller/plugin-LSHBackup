@@ -2,8 +2,8 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
-sendVarToJS('eqType', 'lshbackup');
-$eqLogics = eqLogic::byType('lshbackup');
+sendVarToJS('eqType', 'LSHBackup');
+$eqLogics = eqLogic::byType('LSHBackup');
 ?>
 
 <script type="text/javascript">
