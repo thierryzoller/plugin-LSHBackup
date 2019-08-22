@@ -66,7 +66,7 @@ class LSHBackup extends eqLogic {
                 $cmd->setIsHistorized(0);
                 $cmd->setOrder(count($this->getCmd()));
                 $cmd->setEqLogic_id($this->getId());
-                $cmd->setEqType('datatransfertInfo');
+                $cmd->setEqType('LSHBackupInfo');
                 $cmd->setLogicalId($id);
                 $cmd->setName($cmd->getLogicalId());
                 $cmd->setType('info');
@@ -83,7 +83,7 @@ class LSHBackup extends eqLogic {
                 $cmd->setIsHistorized(0);
                 $cmd->setOrder(count($this->getCmd()));
                 $cmd->setEqLogic_id($this->getId());
-                $cmd->setEqType('datatransfertInfo');
+                $cmd->setEqType('LSHBackupInfo');
                 $cmd->setLogicalId($id);
                 $cmd->setName($cmd->getLogicalId());
                 $cmd->setType('info');
@@ -234,8 +234,8 @@ class LSHBackupCmd extends cmd {
     }
 }
 
-class datatransfertInfo extends cmd {
+class LSHBackupInfo extends cmd {
 }
-class datatransfertInfoCmd extends cmd {
+class LSHBackupInfoCmd extends cmd {
 }
 ?>
