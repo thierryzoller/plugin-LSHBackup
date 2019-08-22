@@ -39,7 +39,7 @@ foreach ($eqLogics as $eqLogic) {
 foreach ($eqLogics as $eqLogic) {
 	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
 	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="text-align: center; background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-	echo '<img src="plugins/datatransfert/doc/images/datatransfert_icon.png" height="105" width="95" />';
+	echo '<img src="plugins/LSHBackup/doc/images/datatransfert_icon.png" height="105" width="95" />';
 	echo "<br>";
 	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;">' . $eqLogic->getHumanName(true, true) . '</span>';
 	echo '</div>';
@@ -87,7 +87,7 @@ foreach (object::all() as $object) {
                     <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
 					    <option disabled selected value>-- {{Choisir un type}} --</option>
 <?php
-  foreach (datatransfert::supportedProtocol() as $protocol) {
+  foreach (LSHBackup::supportedProtocol() as $protocol) {
     echo '<option value="' . $protocol . '">' . $protocol . '</option>';
   }
 ?>
@@ -133,5 +133,5 @@ foreach (object::all() as $object) {
 </div>d
 </div>
 
-<?php include_file('desktop', 'datatransfert', 'js', 'LSHBackup');?>
+<?php include_file('desktop', 'LSHBackup', 'js', 'LSHBackup');?>
 <?php include_file('core', 'plugin.template', 'js');?>

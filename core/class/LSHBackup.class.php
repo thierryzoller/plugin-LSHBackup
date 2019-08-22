@@ -19,7 +19,7 @@
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__) . '/../../core/php/datatransfert.inc.php';
 
-class datatransfert extends eqLogic {
+class LSHBackup extends eqLogic {
     public static function dependancy_info() {
         $return = array();
         $return['log'] = __CLASS__ . '_update';
@@ -112,7 +112,7 @@ class datatransfert extends eqLogic {
   }
 }
 
-class datatransfertCmd extends cmd {
+class LSHBackupCmd extends cmd {
     public static function orderFile($a, $b) {
         if ($a['datetime'] == $b['datetime']) {
             return 0;
