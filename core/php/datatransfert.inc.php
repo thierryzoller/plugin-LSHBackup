@@ -19,7 +19,7 @@
 namespace DataTransfert;
 
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-include_file('core', 'LSHBackup', 'class', 'LSHBackup');
+include_file('core', 'datatransfert', 'class', 'datatransfert');
 require_once dirname(__FILE__) . '/../../vendor/autoload.php';
 
 function timesort($a, $b)
