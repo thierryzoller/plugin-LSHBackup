@@ -218,9 +218,6 @@ class LSHBackupCmd extends cmd {
                 $this->setProgress($source . "/" . $file, filesize($source . "/" . $file));
             }
             $eqLogic->setUploadStatus($this->getName(), "cleaning");
-			
-
-			
             if ($this->getConfiguration('remove_old') != "")
                 $class->removeOlder($cible, $this->getConfiguration('remove_old'));
 			  

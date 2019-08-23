@@ -8,5 +8,5 @@
 	"category" : "communication",
 	"changelog" : "https://github.com/fensoft/plugin-datatransfert/commits/master",
 	"documentation" : "https://github.com/fensoft/plugin-datatransfert/blob/master/doc/#language#/index.asciidoc",
-	"hasDependency" : 1
+	"hasDependency" : 0
 }

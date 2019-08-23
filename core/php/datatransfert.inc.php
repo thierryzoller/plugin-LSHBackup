@@ -45,7 +45,7 @@ class DataTransfert {
     foreach ($formats as $format => $example) {
       $date = \DateTime::createFromFormat($format, $_name);
 	  
-	  log::add('LSHBAckup', 'Date' . $date);
+	  //log::add('LSHBAckup', 'Date' . $date);
 	  
       if ($date)
         return $date->format('U');
