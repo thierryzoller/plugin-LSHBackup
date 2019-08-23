@@ -37,10 +37,10 @@ class LSHBackup extends eqLogic {
     }
 
     public static function dependancy_install() {
-        log::remove(__CLASS__ . '_update');
-        $cmd = dirname(__FILE__) . '/../../external/install.sh';
-        $cmd .= ' ' . jeedom::getTmpFolder(__CLASS__) . '_progress';
-        return array('script' => $cmd, 'log' => log::getPathToLog(__CLASS__ . '_update'));
+       # log::remove(__CLASS__ . '_update');
+       # $cmd = dirname(__FILE__) . '/../../external/install.sh';
+       # $cmd .= ' ' . jeedom::getTmpFolder(__CLASS__) . '_progress';
+       # return array('script' => $cmd, 'log' => log::getPathToLog(__CLASS__ . '_update'));
     }
 
     public static function supportedProtocol() {
@@ -218,12 +218,11 @@ class LSHBackupCmd extends cmd {
                 $this->setProgress($source . "/" . $file, filesize($source . "/" . $file));
             }
             $eqLogic->setUploadStatus($this->getName(), "cleaning");
-			$a = getConfiguration('remove_old');
-			log::add('LSHBackup', 'debug'  . $a);
+			
+
+			
             if ($this->getConfiguration('remove_old') != "")
                 $class->removeOlder($cible, $this->getConfiguration('remove_old'));
-			  
-			  log::add('LSHBackup', 'debug'  . $path);
 			  
             $list = $class->ls($cible);
             $res = array();
