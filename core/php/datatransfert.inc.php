@@ -48,8 +48,7 @@ class DataTransfert {
     foreach ($formats as $format => $example) {
       $date = \DateTime::createFromFormat($format, $_name);
 	  
-    $this->log('error', "Guess2" . $_name);
-	  
+
       if ($date)
         return $date->format('U');
     }
@@ -96,12 +95,15 @@ class DataTransfert {
     foreach ($ls as $val) {
 	  
 	  $this->log('info', "File " . $val);
-       error_log(print_r($val,true));
+	  
+	  error_log("File : ", 0);
+      error_log(print_r($val,true));
 	  
 	  $guessed = $this->guessTimestamp($val["name"]);
 	  
-	  
-	  $this->log('info', "Guess " . $val);
+	  error_log("Guess : ", 0);
+	  error_log(print_r($guessed,true));
+	  $this->log('info', "Guess: " . $guessed);
 
 
       if ($guessed != null)
