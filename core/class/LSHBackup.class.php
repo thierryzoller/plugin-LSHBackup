@@ -220,9 +220,6 @@ class LSHBackupCmd extends cmd {
             $eqLogic->setUploadStatus($this->getName(), "cleaning");
             if ($this->getConfiguration('remove_old') != "")
                 $class->removeOlder($cible, $this->getConfiguration('remove_old'));
-			  
-			  log::add('LSHBackup', 'old0', . $path);
-			  
             $list = $class->ls($cible);
             $res = array();
             foreach ($list as $val)
