@@ -94,7 +94,16 @@ class DataTransfert {
     $ls2 = array();
     $lsskipped = array();
     foreach ($ls as $val) {
-      $guessed = $this->guessTimestamp($val["name"]);
+	  
+	  $this->log('info', "File " . $val);
+     
+	  
+	  $guessed = $this->guessTimestamp($val["name"]);
+	  
+	  
+	  $this->log('info', "Guess " . $val);
+
+
       if ($guessed != null)
         $val["time"] = $guessed;
       if ($val["time"] == null)
