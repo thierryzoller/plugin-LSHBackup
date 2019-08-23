@@ -29,7 +29,7 @@ function timesort($a, $b)
 
 class DataTransfert {
   function log($type, $message) {
-    \log::add($this->logName, $type, $message);
+  log::add($this->logName, $type, $message);
   }
 
   function setProgressCallback($class) {
@@ -51,13 +51,13 @@ class DataTransfert {
   }
 
   static function withEqLogic($_eqLogic) {
-    \log::add('datatransfert', 'error', "withEqLogic unimplemented");
+  log::add('LSHBackup', 'error', "withEqLogic unimplemented");
   }
 
   function setParentCmd($cmd) {
-    $this->logName = 'datatransfert';
+    $this->logName = 'LSHBackup';
     if ($cmd->getEqLogic()->getConfiguration('splitLogs') == 1)
-      $this->logName = 'datatransfert_' . $cmd->getEqLogic()->getName() . "_" . $cmd->getName();
+      $this->logName = 'LSHBackup_' . $cmd->getEqLogic()->getName() . "_" . $cmd->getName();
     $this->preciseProgress = $cmd->getEqLogic()->getConfiguration('preciseProgress') == 1 ? true : false;
     if (isset($this->preciseProgressForce))
       $this->preciseProgress = $this->preciseProgressForce;
@@ -115,7 +115,7 @@ class ProgressWrapper {
   static $counter = 0;
 
   function stream_open($path, $mode, $options, &$opened_path) {
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_open " . $path);
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_open " . $path);
     $url = parse_url($path);
     $this->fp = self::$registered[$url['host']]["content"];
     $this->id = self::$registered[$url['host']]["id"];
@@ -125,7 +125,7 @@ class ProgressWrapper {
     return true;
   }
   function stream_read($count) {
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_read " . $count);
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_read " . $count);
     if (isset($this->options["speed"]) && $this->options["speed"] != "") {
       $this->totalCount += $count;
       $time = (\microtime(true) - $this->initialDate);
@@ -134,47 +134,47 @@ class ProgressWrapper {
       $wait = $size / $speed - $time;
       if ($wait > 0.01) {
         \usleep($wait * 1000000);
-        log::add('datatransfert', 'debug', "throttle " . $wait . " time=" . $time . " speed=" . $speed . " size=" . $size);
+        log::add('LSHBackup', 'debug', "throttle " . $wait . " time=" . $time . " speed=" . $speed . " size=" . $size);
       }
     }
 
     $res = fread($this->fp, $count);
     $this->callback->setProgress($this->id, ftell($this->fp));
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_read=" . strlen($res));
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_read=" . strlen($res));
     return $res;
   }
   function stream_eof() {
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_eof");
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_eof");
     $res = feof($this->fp);
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_eof=" . ($res ? "1" : "0"));
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_eof=" . ($res ? "1" : "0"));
     return $res;
   }
   function stream_tell() {
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_tell");
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_tell");
     $res = ftell($this->fp);
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_tell=" . $res);
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_tell=" . $res);
     return $res;
   }
   function stream_stat() {
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_stat");
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_stat");
     //return self::$stat;
     $res = fstat($this->fp);
-    log::add('datatransfert', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
+    log::add('LSHBackup', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
     return $res;
   }
   function stream_seek($offset , $whence) {
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_seek " . $offset . " " . $whence);
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_seek " . $offset . " " . $whence);
     $res = fseek($this->fp, $offset, $whence);
-    log::add('datatransfert', 'debug', "ProgressWrapper::stream_seek=" . $res);
+    log::add('LSHBackup', 'debug', "ProgressWrapper::stream_seek=" . $res);
     return 0 === $res;
   }
   static function url_stat($path, $flags) {
-    log::add('datatransfert', 'debug', "ProgressWrapper::url_stat " . $path);
+    log::add('LSHBackup', 'debug', "ProgressWrapper::url_stat " . $path);
     //return self::$stat;
     $url = parse_url($path);
     $fp = self::$registered[$url['host']]["content"];
     $res = fstat($fp);
-    log::add('datatransfert', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
+    log::add('LSHBackup', 'debug', "ProgressWrapper::url_stat=" . json_encode($res));
     return $res;
   }
   static function wrap($what, $id, $callback, $options = array()) {
@@ -209,7 +209,7 @@ class Fly extends DataTransfert {
   function put($_source, $_cible) {
     if (isset($this->removeDupes) && $this->removeDupes == true) {
       foreach ($this->ls(dirname($_cible)) as $val) {
-        log::add('datatransfert', 'debug', "dupes " . $val["alias"] . "==" . basename($_cible));
+        log::add('LSHBackup', 'debug', "dupes " . $val["alias"] . "==" . basename($_cible));
         if ($val["alias"] == basename($_cible)) {
           $this->remove(dirname($_cible) . "/" . $val["name"]);
         }
