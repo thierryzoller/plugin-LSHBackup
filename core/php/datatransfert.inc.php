@@ -41,7 +41,11 @@ class DataTransfert {
   }
 
   static function guessTimestamp($_name) {
-    $formats = array("*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz");
+    $this->log('error', "Name" .$_name);
+	
+	$formats = array("*-*-*.*.*-Y-m-d-H*.*" => "backup-fensoft -3.1.05-2017-10-04-11h52.tar.gz");
+
+		
     foreach ($formats as $format => $example) {
       $date = \DateTime::createFromFormat($format, $_name);
 	  
