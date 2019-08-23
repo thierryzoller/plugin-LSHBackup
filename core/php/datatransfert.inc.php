@@ -96,7 +96,7 @@ class DataTransfert {
     foreach ($ls as $val) {
 	  
 	  $this->log('info', "File " . $val);
-     
+       error_log(print_r($val,true));
 	  
 	  $guessed = $this->guessTimestamp($val["name"]);
 	  
