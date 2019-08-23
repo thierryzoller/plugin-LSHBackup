@@ -29,7 +29,7 @@ function timesort($a, $b)
 
 class DataTransfert {
   function log($type, $message) {
-  log::add($this->logName, $type, $message);
+  log::add('LOG', $type, $message);
   }
 
   function setProgressCallback($class) {
