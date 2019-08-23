@@ -41,15 +41,14 @@ class DataTransfert {
   }
 
   static function guessTimestamp($_name) {
-    $this->log('error', "Name" .$_name);
+    $this->log('error', "Guess" . $_name);
 	
-	$formats = array("*-*-*.*.*-Y-m-d-H*.*" => "backup-fensoft -3.1.05-2017-10-04-11h52.tar.gz");
-
+	$formats = array("*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz");
 		
     foreach ($formats as $format => $example) {
       $date = \DateTime::createFromFormat($format, $_name);
 	  
-	  //log::add('LSHBAckup', 'Date' . $date);
+    $this->log('error', "Guess2" . $_name);
 	  
       if ($date)
         return $date->format('U');
@@ -91,6 +90,7 @@ class DataTransfert {
   function removeOlder($_cible, $numberToKeep) {
     $this->log('info', "cleaning and keeping " . $numberToKeep . " most recent files in [" . $_cible . "]");
     $ls = $this->ls($_cible);
+	$this->log('info', "LS " . $ls);
     $ls2 = array();
     $lsskipped = array();
     foreach ($ls as $val) {
