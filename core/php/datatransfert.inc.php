@@ -43,19 +43,16 @@ class DataTransfert {
   static function guessTimestamp($_name) {
     
 	
-	$formats = array("*-*-*.*.*-Y-m-d-H?i.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz");
+	$formats = array(
+	"*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz",
+	"*-*-*.*.*-Y-m-d-H?i.??" => "backup-Moutfort-3.3.33-2019-08-23-21h16.7z",
+	);
 
-	  error_log("Formats : ", 0);
-	  error_log(print_r($formats,true));
 	  
     foreach ($formats as $format => $example) {
-	 error_log("Format : ", 0);
-	  error_log(print_r($format,true));
-	  error_log(print_r($formats,true));
-		
+
       $date = \DateTime::createFromFormat($format, $_name);
-	   error_log("Date : ", 0);
-	  error_log(print_r($date,true));
+
 
       if ($date)
         return $date->format('U');
