@@ -56,7 +56,7 @@ foreach ($eqLogics as $eqLogic) {
                 <fieldset>
                     <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}<i class='fa fa-cogs eqLogicAction pull-right cursor expertModeVisible' data-action='configure'></i></legend>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">{{Nom de l'équipement Data transfert}}</label>
+                        <label class="col-sm-3 control-label">{{Nom}}</label>
                         <div class="col-sm-4">
                             <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                             <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement Data transfert}}"/>
@@ -79,26 +79,26 @@ foreach (object::all() as $object) {
                     <label class="col-sm-3 control-label"></label>
                     <div class="col-sm-9">
                     	<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-			<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+			<!--<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>-->
                    </div>
                </div>
                <div class="form-group">
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-4">
-                    <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
+                 <!--   <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
 					    <option disabled selected value>-- {{Choisir un type}} --</option>
 <?php
   foreach (LSHBackup::supportedProtocol() as $protocol) {
     echo '<option value="' . $protocol . '">' . $protocol . '</option>';
   }
 ?>
-                   </select>
+                   </select>-->
                </div>
            </div>
        </fieldset>
    </form>
 </div>
-<div class="col-sm-6">
+<!--<<div class="col-sm-6">
     <form class="form-horizontal">
         <fieldset>
             <legend><i class="fa fa-wrench"></i> {{Paramètres}}</legend>
@@ -130,8 +130,8 @@ foreach (object::all() as $object) {
         </div>
     </fieldset>
 </form>
-
-</div>d
+-->
+</div>
 </div>
 
 <?php include_file('desktop', 'LSHBackup', 'js', 'LSHBackup');?>
