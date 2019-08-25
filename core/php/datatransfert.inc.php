@@ -49,7 +49,7 @@ class DataTransfert {
 	);
 
 	  
-    foreach ($formats as $format) {
+    foreach ($formats as $format => $example) {
 
       $date = \DateTime::createFromFormat($format, $_name);
 
