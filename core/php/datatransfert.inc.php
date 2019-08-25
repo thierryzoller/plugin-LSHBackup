@@ -45,7 +45,7 @@ class DataTransfert {
 	
 	$formats = array(
 	//"*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz",
-	"*-*-*.*.*-Y-m-d-H?i*" => "backup-Moutfort-3.3.33-2019-08-23-21h16.7z",
+	"*-*-????????-Y-m-d-H?i.*" => "backup-Moutfort-3.3.33-2019-08-23-21h16.7z",
 	);
 
 	  
