@@ -41,20 +41,14 @@ class DataTransfert {
   }
 
   static function guessTimestamp($_name) {
-    
-	
 	$formats = array(
-	//"*-*-*.*.*-Y-m-d-H?i.*.*" => "backup-fensoft-3.1.5-2017-10-04-11h52.tar.gz",
 	"*-*-????????-Y-m-d-H?i.*" => "backup-Moutfort-3.3.33-2019-08-23-21h16.7z",
 	);
 
-	  
+  
     foreach ($formats as $format => $example) {
-
-      $date = \DateTime::createFromFormat($format, $_name);
-
-
-      if ($date)
+    $date = \DateTime::createFromFormat($format, $_name);
+    if ($date)
         return $date->format('U');
     }
     return null;
@@ -108,6 +102,7 @@ class DataTransfert {
 	  
 	  error_log("Guess : ", 0);
 	  error_log(print_r($guessed,true));
+	  
 	  $this->log('info', "Guess: " . $guessed);
 
 
@@ -119,7 +114,7 @@ class DataTransfert {
         array_push($ls2, $val);
     }
     if (count($lsskipped) != 0)
-      $this->log('info', "unknown time, clean skipped for " . implode(',', $lsskipped));
+      $this->log('info', "Cleaning skipped for " . implode(',', $lsskipped));
     usort($ls2, "\\DataTransfert\\timesort");
     $todel = array_slice($ls2, 0, -$numberToKeep);
     foreach ($todel as $val) {
