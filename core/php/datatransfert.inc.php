@@ -86,18 +86,14 @@ class DataTransfert {
   }
   
   function removeOlder($_cible, $numberToKeep) {
-    $this->log('info', "cleaning and keeping " . $numberToKeep . " most recent files in [" . $_cible . "]");
+    $this->log('info', "cleaning and keeping " . $numberToKeep . " most recent files on Remote Backup");
     $ls = $this->ls($_cible);
-	$this->log('info', "LS " . $ls);
     $ls2 = array();
     $lsskipped = array();
     foreach ($ls as $val) {
 	  
 	  $this->log('info', "File " . $val);
-	  
-	  error_log("File : ", 0);
-      error_log(print_r($val,true));
-	  
+	   
 	  $guessed = $this->guessTimestamp($val["name"]);
 	  
 	  error_log("Guess : ", 0);
@@ -114,7 +110,7 @@ class DataTransfert {
         array_push($ls2, $val);
     }
     if (count($lsskipped) != 0)
-      $this->log('info', "Cleaning skipped for " . implode(',', $lsskipped));
+    //$this->log('info', "Cleaning skipped for " . implode(',', $lsskipped));
     usort($ls2, "\\DataTransfert\\timesort");
     $todel = array_slice($ls2, 0, -$numberToKeep);
     foreach ($todel as $val) {

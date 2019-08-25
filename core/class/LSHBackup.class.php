@@ -225,7 +225,7 @@ class LSHBackupCmd extends cmd {
             $res = array();
             foreach ($list as $val)
                 array_push($res, $val["alias"]);
-            $class->log('info', "files on [" . $cible . "]: " . implode(",", $res));
+            //$class->log('info', "files on [" . $cible . "]: " . implode(",", $res));
             $eqLogic->setUploadStatus($this->getName(), "ok");
         } catch (Exception $e) {
             $eqLogic->setUploadStatus($this->getName(), "ko");
