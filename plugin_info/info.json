@@ -6,7 +6,7 @@
 	"author" : "LUX Smart Home",
 	"require" : "3.0",
 	"category" : "communication",
-	"changelog" : "",
-	"documentation" : "",
+	"changelog" : "http://www.thisisawebsote.com",
+	"documentation" : "http://www.thisisawebsote.com",
 	"hasDependency" : 0
 }
