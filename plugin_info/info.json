@@ -1,12 +1,12 @@
 {
 	"id" : "LSHBackup",
 	"name" : "LSHBackup GUI",
-	"description" : "Plugin pour transferer de fichiers",
+	"description" : "Remote Backup for LSH",
 	"licence" : "AGPL",
-	"author" : "fensoft",
+	"author" : "LUX Smart Home",
 	"require" : "3.0",
 	"category" : "communication",
-	"changelog" : "https://github.com/fensoft/plugin-datatransfert/commits/master",
-	"documentation" : "https://github.com/fensoft/plugin-datatransfert/blob/master/doc/#language#/index.asciidoc",
+	"changelog" : "",
+	"documentation" : "",
 	"hasDependency" : 0
 }
