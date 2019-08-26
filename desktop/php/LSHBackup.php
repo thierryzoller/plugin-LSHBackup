@@ -31,11 +31,11 @@ foreach ($eqLogics as $eqLogic) {
     <legend><i class="icon techno-memory"></i>  {{Lux Smart Home Backup}}
     </legend>
     <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction" data-action="add" style="text-align: center; background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-            <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
+      <!--   <div class="cursor eqLogicAction" data-action="add" style="text-align: center; background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+         <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
         <br>
         <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02">Ajouter</span>
-    </div>
+    </div>-->
     <?php
 foreach ($eqLogics as $eqLogic) {
 	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
@@ -132,7 +132,7 @@ foreach (object::all() as $object) {
 </form>
 
 </div>
-</div>
+
 
 <?php include_file('desktop', 'LSHBackup', 'js', 'LSHBackup');?>
 <?php include_file('core', 'plugin.template', 'js');?>
