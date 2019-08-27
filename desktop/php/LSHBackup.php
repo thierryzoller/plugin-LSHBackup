@@ -98,7 +98,8 @@ foreach (object::all() as $object) {
        </fieldset>
    </form>
 </div>
-<<div class="col-sm-6">
+
+<!--<div class="col-sm-6">
     <form class="form-horizontal">
         <fieldset>
             <legend><i class="fa fa-wrench"></i> {{Paramètres}}</legend>
@@ -106,7 +107,7 @@ foreach (object::all() as $object) {
         </fieldset>
     </form>
 </div>
-</div>
+</div>-->
 <legend><i class="fa fa-list-alt"></i> {{Data transfert}}</legend>
 
 
