@@ -1,6 +1,6 @@
 {
 	"id" : "LSHBackup",
-	"name" : "LSHBackup",
+	"name" : "LSH Backup",
 	"description" : "Remote Backup for LSH",
 	"licence" : "AGPL",
 	"author" : "LUX Smart Home",
