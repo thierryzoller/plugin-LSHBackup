@@ -53,8 +53,8 @@ class ftp extends Fly {
 		/** optional config settings */
 		'port' => "21",
 		'root' => "/" . $_base,
-		'passive' => true,
-		'ssl' => false,
+		'passive' => "1",
+		'ssl' => "0",
 		'timeout' => 30,
 	);
     if ($this->ftpd)
