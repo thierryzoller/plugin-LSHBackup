@@ -82,7 +82,7 @@ foreach (object::all() as $object) {
 			<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
                    </div>
                </div>
-                <div class="form-group">
+<!--                <div class="form-group">
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-4">
                  <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
@@ -97,7 +97,7 @@ foreach (LSHBackup::supportedProtocol() as $protocol) {
            </div>
        </fieldset>
    </form>
-</div>
+</div>-->
 
 <div class="col-sm-6">
     <form class="form-horizontal">

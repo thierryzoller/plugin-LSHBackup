@@ -19,7 +19,13 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
-
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{Serveur}}</label>
+    <div class="col-sm-4">
+        Settings have been correctly applied.
+    </div>
+</div>
+<!--
 <div class="form-group">
     <label class="col-sm-3 control-label">{{Serveur}}</label>
     <div class="col-sm-4">
@@ -79,5 +85,5 @@ if (!isConnect('admin')) {
     <div class="col-sm-4">
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="splitLogs"/>{{Scinder les logs}}</label>
     </div>
-</div>
+</div>-->
 
