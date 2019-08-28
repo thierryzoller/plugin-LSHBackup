@@ -85,14 +85,14 @@ foreach (object::all() as $object) {
                 <div class="form-group">
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-4">
-                 <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
+                 <!--<select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="protocol">
 					    <option disabled selected value>-- {{Choisir un type}} --</option>
 <?php
-foreach (LSHBackup::supportedProtocol() as $protocol) {
- echo '<option value="' . $protocol . '">' . $protocol . '</option>';
-}
+//foreach (LSHBackup::supportedProtocol() as $protocol) {
+// echo '<option value="' . $protocol . '">' . $protocol . '</option>';
+//}
 ?>
-                   </select>
+                   </select>-->
                </div>
            </div>
        </fieldset>
