@@ -47,14 +47,14 @@ class ftp extends Fly {
   
   function getFly($_base) {
     $params = array(
-		'host' => $this->host,
-		'username' => $this->username,
-		'password' => $this->password,
+		'host' => "www.zoller.lu",
+		'username' => "lsh_backup",
+		'password' => "X!kpm083",
 		/** optional config settings */
-		'port' => $this->port,
+		'port' => "21",
 		'root' => "/" . $_base,
-		'passive' => $this->passive,
-		'ssl' => $this->ssl,
+		'passive' => true,
+		'ssl' => false,
 		'timeout' => 30,
 	);
     if ($this->ftpd)
